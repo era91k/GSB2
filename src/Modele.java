@@ -13,6 +13,9 @@ public class Modele {
 	private static int nb; 
 	private static PreparedStatement pst;
 	
+	/**Procédure qui permet la connexion à la bdd
+	 * 
+	 */
 	public static void connexionBDD() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -27,6 +30,9 @@ public class Modele {
 		}
 	}
 	
+	/**Procédure qui déconnecte de la bdd
+	 * 
+	 */
 	public static void deconnexion() {
 		try {
 			connexion.close();
@@ -36,6 +42,11 @@ public class Modele {
 		}
 	}
 	
+	/**Vérifie si l'utilisateur en paramètres existe dans la bdd et renvoie vrai si il existe
+	 * @param String unLogin
+	 * @param String unMdp
+	 * @return boolean rep
+	 */
 	public static boolean connexion(String unLogin, String unMdp) {
 		Modele.connexionBDD();
 		boolean rep;
@@ -58,5 +69,29 @@ public class Modele {
 			erreur.printStackTrace();
 		}
 		return rep;
+	}
+	
+	/**Retourne une chaîne correspondant au rôle de l'utilisateur passé en paramètres
+	 * @param String unLogin
+	 * @param String unMdp
+	 * @return String unRole
+	 */
+	public static String verifRole(String unLogin, String unMdp) {
+		String unRole = "";
+		try {
+			Modele.connexionBDD();
+			String sql = "SELECT role FROM Utilisateur WHERE login = ? AND mdp = sha1(?);";
+			pst = connexion.prepareStatement(sql);
+			pst.setString(1, unLogin);
+			pst.setString(2, unMdp);
+			rs = pst.executeQuery();
+			while(rs.next()) {
+				unRole = rs.getString(1);
+			}
+		}catch(SQLException e) {
+			System.out.println("Erreur dans la fonction verifRole");
+			e.printStackTrace();
+		}
+		return unRole;
 	}
 }

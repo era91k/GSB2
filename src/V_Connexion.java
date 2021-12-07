@@ -1,260 +1,103 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-
-public class V_Connexion extends JFrame implements ActionListener{
-
+public class V_Connexion extends JFrame implements ActionListener {
 	//Attributs privés
-    private JPanel panelConnexion;
-    private JPanel panelButton;
-    private JLabel lblLogin;
-    private JLabel lblPassword;
-    private JTextField jtfLogin;
-    private JPasswordField jtfPassword;
-    private JButton btnConnexion;
-    private ImageIcon img;
-    private JLabel image;
-    private JMenuBar menu;
-    private JMenuItem ajoutCrs;
-    private JMenuItem suppCrs;
-    private JMenuItem affCrs;
-    private JMenuItem rechCrs;
-    private JMenuItem ajoutEcu;
-    private JMenuItem suppEcu;
-    private JMenuItem affEcu;
-    private JMenuItem rechEcu;
-    private JMenuItem ajoutCir;
-    private JMenuItem suppCir;
-    private JMenuItem affCir;
-    private JMenuItem rechCir;
-    private JMenuItem affCrsXML;
-    private JMenuItem affEcuCSV;
-    
-    public V_Connexion() {
-    	this.setTitle("GSB II");
+	private JPanel monPanel;
+	private JLabel lblRaceio;
+	private JLabel lblLogin;
+	private JTextField jtfLogin;
+	private JLabel lblMdp;
+	private JPasswordField jpfMdp;
+	private JButton btnValider;
+	
+	public V_Connexion() {
+		
+		//Titre
+        this.setTitle("Connexion à Raceio"); 
+        //Localisation de la fenêtre (null = milieu)
+        this.setLocationRelativeTo(null);
+        //Arrêt du programme quand la croix "fermer" est cliquée
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(1200, 800);
-        this.setResizable(true);
+        //Taille de la fenêtre
+        this.setSize(400, 380);
+        this.setResizable(false); //<---Redimension de la fenetre impossible
         
-        panelConnexion = new JPanel();
-        panelButton = new JPanel();
-        this.panelConnexion.setBackground(Color.blue);
-        this.panelButton.setBackground(Color.blue);
+        //Initialisation et paramétrage du panel
+        this.monPanel = new JPanel();
+        this.monPanel.setLayout(null);
+        this.monPanel.setBackground(new Color(48, 51, 107));
         
-        lblLogin = new JLabel("Login : ");
-        jtfLogin = new JTextField("");
+        //Initialisation des composants
+        this.lblRaceio = new JLabel("CONNEXION A GSB2");
+        this.lblLogin = new JLabel("Login");
+        this.jtfLogin = new JTextField("");
+        this.lblMdp = new JLabel("Mot de passe");
+        this.jpfMdp = new JPasswordField("");
+        this.btnValider = new JButton("Valider");
+        this.btnValider.addActionListener(this);
         
-        lblPassword = new JLabel("Mot de passe : ");
-        jtfPassword = new JPasswordField ("");
-       
-        jtfLogin.setPreferredSize(new Dimension(150, 30));
-        jtfPassword.setPreferredSize(new Dimension(150, 30));
-
-        panelConnexion.add(lblLogin);
-        panelConnexion.add(jtfLogin);
-        panelConnexion.add(lblPassword);
-        panelConnexion.add(jtfPassword);
+        //Couleur des composants
+        lblRaceio.setForeground(Color.white);
+        lblLogin.setForeground(Color.white);
+        lblMdp.setForeground(Color.white);
+        jtfLogin.setForeground(Color.white);
+        jpfMdp.setForeground(Color.white);
+        btnValider.setForeground(Color.white);
+        jtfLogin.setBackground(new Color(83, 92, 104));
+        jpfMdp.setBackground(new Color(83, 92, 104));
+        btnValider.setBackground(new Color(104, 109, 224));
+        btnValider.setBorder(null);
         
-        btnConnexion = new JButton ("Valider");
-        btnConnexion.addActionListener(this);
-        panelButton.add(btnConnexion);
-        this.getContentPane().add(panelConnexion, BorderLayout.NORTH);
-        this.getContentPane().add(panelButton, BorderLayout.SOUTH);
+        //Taille et position des composants
+        this.lblRaceio.setBounds(125,20,200,30);
+        this.lblLogin.setBounds(70,80,100,30);
+        this.lblMdp.setBounds(70,165,100,30);
+        this.jtfLogin.setBounds(170,80,150,30);
+        this.jpfMdp.setBounds(170,165,150,30);
+        this.btnValider.setBounds(150,250,100,30);
         
-        img = new ImageIcon("P:/Workspace/RASIO/f1_fond.jpg");
-        image = new JLabel();
-        image.setIcon(img);
-        this.getContentPane().add(image);
+        //Ajouter les composants au panel
+        monPanel.add(this.lblRaceio);
+        monPanel.add(this.lblLogin);
+        monPanel.add(this.jtfLogin);
+        monPanel.add(this.lblMdp);
+        monPanel.add(this.jpfMdp);
+        monPanel.add(this.btnValider);
         
-        this.setAlwaysOnTop(false);
+        this.setAlwaysOnTop(true);
+        this.getContentPane().add(monPanel);
         this.setVisible(true);
-    }
-    
-    class ActionListe implements ActionListener{
-    	public void actionPerformed(ActionEvent e) {
-    		/*if (e.getSource().equals(ajoutCrs)) {
-    		    getContentPane().removeAll();
-    		    getContentPane().add(new AjoutCourse().getMonPanelGlobal());
-    		    getContentPane().revalidate();
-    		    getContentPane().repaint();
-    		} 
-    		else if (e.getSource().equals(affCrs)) {
-    		    getContentPane().removeAll();
-    		    getContentPane().add(new AffCourse(Modele.afficherCourse()).getMonPanelGlobal());
-    		    getContentPane().revalidate();
-    		    getContentPane().repaint();
-    		} 
-    		else if (e.getSource().equals(affCrsXML)) {
-    		    getContentPane().removeAll();
-    		    getContentPane().add(new ToXML(Modele.afficherCourse()).getMonPanelGlobal());
-    		    getContentPane().revalidate();
-    		    getContentPane().repaint();
-    		} 
-    		else if (e.getSource().equals(rechCrs)) {
-    		    getContentPane().removeAll();
-    		    getContentPane().add(new RechCourse().getMonPanelGlobal());
-    		    getContentPane().revalidate();
-    		    getContentPane().repaint();
-    		} 
-    		else if (e.getSource().equals(suppCrs)) {
-    		    getContentPane().removeAll();
-    		    getContentPane().add(new SuppCourse().getMonPanelGlobal());
-    		    getContentPane().revalidate();
-    		    getContentPane().repaint();
-    		}
-    		
-    		if (e.getSource().equals(ajoutEcu)) {
-    		    getContentPane().removeAll();
-    		    getContentPane().add(new AjoutEcurie().getMonPanelGlobal());
-    		    getContentPane().revalidate();
-    		    getContentPane().repaint();
-    		} 
-    		else if (e.getSource().equals(affEcu)) {
-    		    getContentPane().removeAll();
-    		    getContentPane().add(new AffEcurie(Modele.afficherEcurie()).getMonPanelGlobal());
-    		    getContentPane().revalidate();
-    		    getContentPane().repaint();
-    		} 
-    		else if (e.getSource().equals(affEcuCSV)) {
-    		    getContentPane().removeAll();
-    		    getContentPane().add(new ToCSV(Modele.afficherEcurie()).getMonPanelGlobal());
-    		    getContentPane().revalidate();
-    		    getContentPane().repaint();
-    		} 
-    		else if (e.getSource().equals(rechEcu)) {
-    		    getContentPane().removeAll();
-    		    getContentPane().add(new RechEcurie().getMonPanelGlobal());
-    		    getContentPane().revalidate();
-    		    getContentPane().repaint();
-    		} 
-    		else if (e.getSource().equals(suppEcu)) {
-    		    getContentPane().removeAll();
-    		    getContentPane().add(new SuppEcurie().getMonPanelGlobal());
-    		    getContentPane().revalidate();
-    		    getContentPane().repaint();
-    		}
-    		
-    		if (e.getSource().equals(ajoutCir)) {
-    		    getContentPane().removeAll();
-    		    getContentPane().add(new AjoutCircuit().getMonPanelGlobal());
-    		    getContentPane().revalidate();
-    		    getContentPane().repaint();
-    		} 
-    		else if (e.getSource().equals(affCir)) {
-    		    getContentPane().removeAll();
-    		    getContentPane().add(new AffCircuit(Modele.afficherCircuit()).getMonPanelGlobal());
-    		    getContentPane().revalidate();
-    		    getContentPane().repaint();
-    		} 
-    		else if (e.getSource().equals(rechCir)) {
-    		    getContentPane().removeAll();
-    		    getContentPane().add(new RechCircuit().getMonPanelGlobal());
-    		    getContentPane().revalidate();
-    		    getContentPane().repaint();
-    		} 
-    		else if (e.getSource().equals(suppCir)) {
-    		    getContentPane().removeAll();
-    		    getContentPane().add(new SuppCircuit().getMonPanelGlobal());
-    		    getContentPane().revalidate();
-    		    getContentPane().repaint();
-    		}*/
-    		
-    	}
-    }
-    
-    public void actionPerformed (ActionEvent evenement) {
-        if(evenement.getSource() == btnConnexion) {
-            String login = jtfLogin.getText();
-            String password = jtfPassword.getText();
-            String newLine = System.getProperty("line.separator");	
-            JTextArea result = new JTextArea ("Erreur de connexion !");
-            if(Modele.connexion(login,password)) {
-                result = new JTextArea ("Bienvenue sur GSB II !"); 
-                affichageMenu();
-                panelConnexion.removeAll();
-                panelConnexion.add(result);
-                panelConnexion.revalidate();
-                panelConnexion.repaint(); 
-            }
-            else {
-                panelConnexion.add(result);
-                panelConnexion.revalidate();
-                panelConnexion.repaint(); 
-            }
-        }
-    }
-    
-    public void affichageMenu() {
-    	
-                JMenuBar menu = new JMenuBar();
-
-                JMenu menuCrs = new JMenu("Course");
-                JMenu menuEcu = new JMenu("Ecurie");
-                JMenu menuCir = new JMenu("Circuit");
-
-                this.ajoutCrs = new JMenuItem("Ajouter Course");
-                this.affCrs = new JMenuItem("Afficher Course");
-                this.affCrsXML = new JMenuItem("Imprimer Course XML");
-                this.rechCrs = new JMenuItem("Rechercher Course");
-                this.suppCrs = new JMenuItem("Supprimer Course");
-
-                this.ajoutEcu = new JMenuItem("Ajouter Ecurie");
-                this.affEcu = new JMenuItem("Afficher Ecurie");
-                this.affEcuCSV = new JMenuItem("Imprimer Ecurie CSV");
-                this.rechEcu = new JMenuItem("Rechercher Ecurie");
-                this.suppEcu = new JMenuItem("Supprimer Ecurie");
-
-                this.ajoutCir = new JMenuItem("Ajouter Circuit");
-                this.affCir = new JMenuItem("Afficher Circuit");
-                this.rechCir = new JMenuItem("Rechercher Circuit");
-                this.suppCir = new JMenuItem("Supprimer Circuit");
-
-                menuCrs.add(ajoutCrs);
-                menuCrs.add(affCrs);
-                menuCrs.add(affCrsXML);
-                menuCrs.add(rechCrs);
-                menuCrs.add(suppCrs);
-
-                menuEcu.add(ajoutEcu);
-                menuEcu.add(affEcu);
-                menuEcu.add(affEcuCSV);
-                menuEcu.add(rechEcu);
-                menuEcu.add(suppEcu);
-
-                menuCir.add(ajoutCir);
-                menuCir.add(affCir);
-                menuCir.add(rechCir);
-                menuCir.add(suppCir);
-
-                this.ajoutCrs.addActionListener(new ActionListe ());
-                this.affCrs.addActionListener(new ActionListe ());
-                this.affCrsXML.addActionListener(new ActionListe ());
-                this.rechCrs.addActionListener(new ActionListe ());
-                this.suppCrs.addActionListener(new ActionListe ());
-
-                this.ajoutEcu.addActionListener(new ActionListe ());
-                this.affEcu.addActionListener(new ActionListe ());
-                this.affEcuCSV.addActionListener(new ActionListe ());
-                this.rechEcu.addActionListener(new ActionListe ());
-                this.suppEcu.addActionListener(new ActionListe ());
-
-                this.ajoutCir.addActionListener(new ActionListe ());
-                this.affCir.addActionListener(new ActionListe ());
-                this.rechCir.addActionListener(new ActionListe ());
-                this.suppCir.addActionListener(new ActionListe ());
-                
-                menu.add(menuCrs);
-                menu.add(menuEcu);
-                menu.add(menuCir);
-                this.setJMenuBar(menu);
-    }
+	}
+	
+	
+	public void actionPerformed (ActionEvent e) {
+		if(e.getSource() == btnValider) {// <-- Lorsque l'utilisateur valide la connexion
+			String unLogin = jtfLogin.getText();
+			char[] unMdp = jpfMdp.getPassword();
+			String leMdp = new String(unMdp);
+			if(Modele.connexion(unLogin, leMdp)) {
+				//L'utilisateur existe
+				String role = Modele.verifRole(unLogin, leMdp);
+				switch(role) {//On vérifie son rôle
+					case "visiteur" :
+						V_MenuVisiteur fenVisit = new V_MenuVisiteur();
+						dispose();
+						break;
+					case "responsable" :
+						JOptionPane.showMessageDialog(this, "Connexion réussie - Responsable");
+						break;
+					case "directeur" :
+						JOptionPane.showMessageDialog(this, "Connexion réussie - Directeur");
+						break;
+				}
+			}else {
+				//Utilisateur n'existe pas
+				JOptionPane.showMessageDialog(this, "Login ou mot de passe incorrect");
+			}
+		}
+	}
 }
+
 
