@@ -71,8 +71,9 @@ public class V_MenuVisiteur extends JFrame implements ActionListener {
 	
 	class ActionReserverObjet implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
+			ArrayList<Materiel> lesMat = Modele.getLesMateriels();
 			V_MenuVisiteur.this.getContentPane().removeAll();
-			V_MenuVisiteur.this.getContentPane().add(new V_ReserverMateriel());
+			V_MenuVisiteur.this.getContentPane().add(new V_ReserverMateriel(lesMat));
 			V_MenuVisiteur.this.revalidate();
 			V_MenuVisiteur.this.setVisible(true);
 			

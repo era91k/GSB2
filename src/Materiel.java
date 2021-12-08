@@ -9,11 +9,10 @@ public class Materiel extends Objet{
 		
 	}
 	
-	public Materiel(int unIdObjet, String unNomObjet, int unNbReservation, Catalogue unCatalogue, double uneLargeur, double uneLongueur, String unType) {
-		super(unIdObjet,unNomObjet,unNbReservation,unCatalogue);
+	public Materiel(int unIdObjet, String unNomObjet, int unNbReservation, double uneLargeur, double uneLongueur, String unType) {
+		super(unIdObjet,unNomObjet,unNbReservation);
 		this.largeur = uneLargeur;
 		this.longueur = uneLongueur;
-		super.getSonCatalogue().ajouterObjet(this);
 	}
 
 	public double getLargeur() {
@@ -45,8 +44,7 @@ public class Materiel extends Objet{
 		int id = super.getIdObjet();
 		String nom = super.getNomObjet();
 		int nb = super.getNbReservations();
-		String nomCatal = super.getSonCatalogue().getNomCatalogue();
-		return id + " - " + nom + " - " + nb + " - " + nomCatal + " - " + this.largeur + " - " + this.longueur + " - " + this.type;
+		return id + " - " + nom + " - " + nb + " - " + this.largeur + " - " + this.longueur + " - " + this.type;
 	}
 	
 	

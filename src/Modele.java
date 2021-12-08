@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class Modele {
 
@@ -93,5 +94,32 @@ public class Modele {
 			e.printStackTrace();
 		}
 		return unRole;
+	}
+	
+	/**Recuper tous les matériels de la bdd et les retourne dans une collection de Materiel
+	 * @return lesMateriel
+	 */
+	public static ArrayList<Materiel> getLesMateriels(){
+		ArrayList<Materiel> lesMat = new ArrayList<Materiel>();
+		try {
+			Modele.connexionBDD();
+			st = connexion.createStatement();
+			String sql = "SELECT objet.idObjet, objet.nom, objet.nbReservation, materiel.largeur, materiel.longueur, materiel.typeMat FROM objet, materiel WHERE objet.idObjet = materiel.idMat;";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {
+				int id = rs.getInt(1);
+				String nom = rs.getString(2);
+				int nbReserv = rs.getInt(3);
+				double largeur = rs.getDouble(4);
+				double longueur = rs.getDouble(5);
+				String type = rs.getString(6);
+				Materiel unMateriel = new Materiel(id,nom,nbReserv,largeur,longueur,type);
+				lesMat.add(unMateriel);
+			}
+		}catch(SQLException e) {
+			System.out.println("Erreur dans la fonction getLesObjets");
+			e.printStackTrace();
+		}
+		return lesMat;
 	}
 }
