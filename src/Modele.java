@@ -14,13 +14,14 @@ public class Modele {
 	private static int nb; 
 	private static PreparedStatement pst;
 	
-	/**Procédure qui permet la connexion à la bdd
+	/**
+	 * Procédure qui permet la connexion à la bdd
 	 * 
 	 */
 	public static void connexionBDD() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connexion = DriverManager.getConnection("jdbc:mysql://172.16.203.218/gsb2?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "sio", "slam");
+			connexion = DriverManager.getConnection("jdbc:mysql://172.16.203.217/gsb2?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "sio", "slam");
 			st = connexion.createStatement();
 		} 
 		catch (ClassNotFoundException erreur ) {
@@ -31,7 +32,8 @@ public class Modele {
 		}
 	}
 	
-	/**Procédure qui déconnecte de la bdd
+	/**
+	 * Procédure qui déconnecte de la bdd
 	 * 
 	 */
 	public static void deconnexion() {
@@ -43,7 +45,8 @@ public class Modele {
 		}
 	}
 	
-	/**Vérifie si l'utilisateur en paramètres existe dans la bdd et renvoie vrai si il existe
+	/**
+	 * Vérifie si l'utilisateur en paramètres existe dans la bdd et renvoie vrai si il existe
 	 * @param String unLogin
 	 * @param String unMdp
 	 * @return boolean rep
@@ -72,7 +75,8 @@ public class Modele {
 		return rep;
 	}
 	
-	/**Retourne une chaîne correspondant au rôle de l'utilisateur passé en paramètres
+	/**
+	 * Retourne une chaîne correspondant au rôle de l'utilisateur passé en paramètres
 	 * @param String unLogin
 	 * @param String unMdp
 	 * @return String unRole
@@ -96,7 +100,8 @@ public class Modele {
 		return unRole;
 	}
 	
-	/**Recuper tous les matériels de la bdd et les retourne dans une collection de Materiel
+	/**
+	 * Recuper tous les matériels de la bdd et les retourne dans une collection de Materiel
 	 * @return lesMateriel
 	 */
 	public static ArrayList<Materiel> getLesMateriels(){
@@ -121,6 +126,36 @@ public class Modele {
 			e.printStackTrace();
 		}
 		return lesMat;
+	}
+	
+	/**
+	 * Recuper tous les véhicules de la bdd et les retourne dans une collection de Vehicule
+	 * @return lesMateriel
+	 */
+	public static ArrayList<Vehicule> getLesVehicules(){
+		ArrayList<Vehicule> lesVehicules = new ArrayList<Vehicule>();
+		try {
+			Modele.connexionBDD();
+			st = connexion.createStatement();
+			String sql = "SELECT Objet.idObjet, Objet.nom, Objet.nbReservation, Vehicule.idTypeV, Vehicule.immat, Vehicule.modele, Vehicule.marque, Vehicule.nbPlaces FROM Objet, Vehicule WHERE Objet.idObjet = Vehicule.idVehicule;";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {
+				int id = rs.getInt(1);
+				String nom = rs.getString(2);
+				int nbReserv = rs.getInt(3);
+				int idTypeV = rs.getInt(4);
+				String immat = rs.getString(5);
+				String modele = rs.getString(6);
+				String marque = rs.getString(7);
+				int nbPlaces = rs.getInt(8);
+				Vehicule unVehicule = new Vehicule(id,nom,nbReserv,idTypeV,immat,modele,marque,nbPlaces);
+				lesVehicules.add(unVehicule);
+			}
+		}catch(SQLException e) {
+			System.out.println("Erreur dans la fonction getLesObjets");
+			e.printStackTrace();
+		}
+		return lesVehicules;
 	}
 	
 	/**
@@ -198,6 +233,11 @@ public class Modele {
 		return rep;
 	}
 	
+	/**
+	 * Méthode récupérant l'id d'un objet de type Materiel
+	 * @param id
+	 * @return
+	 */
 	public static Materiel getMaterielById(int id) {
 		Materiel unMateriel = null;
 		try {
@@ -222,7 +262,11 @@ public class Modele {
 		return unMateriel;
 	}
 	
-	
+	/**
+	 * Méthode récupérant uniquement l'id d'un objet
+	 * @param uneChaine
+	 * @return
+	 */
 	public static int recupInt(String uneChaine) {
 		String val = uneChaine.replaceAll("\\D+","");
 		int leInt = Integer.parseInt(val);

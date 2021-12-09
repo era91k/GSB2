@@ -4,7 +4,6 @@ public class Main {
 		
 		V_Connexion co = new V_Connexion();
 		
-		System.out.println("fdp");
 	}
 
 }

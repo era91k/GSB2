@@ -4,7 +4,6 @@ public abstract class Objet {
 	private String nomObjet;
 	private int nbReservations;
 	
-	//Constructeur
 	/**
 	 * Constructeur
 	 * @param unIdObjet
