@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 public class V_MenuResponsable extends JFrame implements ActionListener {
-	//Attributs privés
+	//Attributs privÃ©s
 	private JPanel monPanel;
 	private JMenuBar menu;
 	private JMenu menuReservation;
@@ -17,15 +17,15 @@ public class V_MenuResponsable extends JFrame implements ActionListener {
 	public V_MenuResponsable() {
 		//Titre
         this.setTitle("Bienvenu(e) dans GSB2"); 
-        //Localisation de la fenêtre (null = milieu)
+        //Localisation de la fenÃªtre (null = milieu)
         this.setLocationRelativeTo(null);
-        //Arrêt du programme quand la croix "fermer" est cliquée
+        //ArrÃªt du programme quand la croix "fermer" est cliquÃ©e
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //Taille de la fenêtre
+        //Taille de la fenï¿½tre
         this.setSize(700, 500);
         this.setResizable(false); //<---Redimension de la fenetre impossible
         
-        //Initialisation et paramétrage des panels
+        //Initialisation et paramï¿½trage des panels
         this.monPanel = new JPanel();
         this.monPanel.setLayout(null);
         this.monPanel.setBackground(new Color(48, 51, 107));
@@ -37,18 +37,18 @@ public class V_MenuResponsable extends JFrame implements ActionListener {
         this.menu.setBorder(BorderFactory.createLineBorder(new Color(47, 53, 66)));
         
         //Partie Gestion des Courses
-        this.menuReservation = new JMenu("Matériel");
-        this.ajoutMat = new JMenuItem("Ajouter un matériel");
-        this.suppMat = new JMenuItem("Supprimer un matériel");
+        this.menuReservation = new JMenu("MatÃ©riel");
+        this.ajoutMat = new JMenuItem("Ajouter un matÃ©riel");
+        this.suppMat = new JMenuItem("Supprimer un matÃ©riel");
         this.ajoutMat.addActionListener(new ActionAjoutMat());
         this.suppMat.addActionListener(new ActionSupptMat());
         this.menuReservation.add(ajoutMat);
         this.menuReservation.add(suppMat);
         this.menu.add(menuReservation);
         
-        //Partie Gestion des écuries
-        this.menuDeconnexion = new JMenu("Déconnexion");
-        this.seDeconnect = new JMenuItem("Se déconnecter");
+        //Partie Gestion des ï¿½curies
+        this.menuDeconnexion = new JMenu("DÃ©connexion");
+        this.seDeconnect = new JMenuItem("Se dÃ©connecter");
         this.quitter = new JMenuItem("Quitter");
         this.seDeconnect.addActionListener(new ActionDeconnexion());
         this.quitter.addActionListener(new ActionQuitter());
