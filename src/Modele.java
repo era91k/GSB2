@@ -124,7 +124,7 @@ public class Modele {
 	}
 	
 	/**
-	 * Requete d'insertion de matériel dans la bdd
+	 * Méthode d'insertion de matériel dans la bdd
 	 * @param unIdObjet
 	 * @param unNomObjet
 	 * @param uneLargeur
@@ -141,14 +141,15 @@ public class Modele {
 			pst.setInt(1, unIdObjet);
 			pst.setString(2, unNomObjet);
 			int ins = pst.executeUpdate();
-			String requete2 = "INSERT INTO Materiel VALUES(?,?,?);";
+			String requete2 = "INSERT INTO Materiel VALUES(?,?,?,?);";
 			pst = connexion.prepareStatement(requete2);
-			pst.setDouble(1, uneLargeur);
-			pst.setDouble(2, uneLongueur);
-			pst.setString(3, unType);
+			pst.setInt(1, unIdObjet);
+			pst.setDouble(2, uneLargeur);
+			pst.setDouble(3, uneLongueur);
+			pst.setString(4, unType);
 			int ins2 = pst.executeUpdate();
 			if (ins == 1 & ins2 == 1) {
-			rep = true;
+				rep = true;
 			}
 		}catch(SQLException e) {
 			System.out.println("Erreur dans la requête ajouterMat");
@@ -157,7 +158,19 @@ public class Modele {
 		return rep;
 	}
 	
-	public static boolean ajouterVehicule(int unIdObjet, String unNomObjet) {
+	/**
+	 * Méthode d'insertion de véhicule dans la bdd
+	 * @param unIdObjet
+	 * @param unNomObjet
+	 * @param unNbReservation
+	 * @param unIdTypeV
+	 * @param unImmat
+	 * @param unModele
+	 * @param uneMarque
+	 * @param unNbPlace
+	 * @return
+	 */
+	public static boolean ajouterVehicule(int unIdObjet, String unNomObjet, int unNbReservation, int unIdTypeV , String unImmat, String unModele, String uneMarque, int unNbPlace) {
 		boolean rep = false;
 		try {
 			Modele.connexionBDD();
@@ -166,7 +179,18 @@ public class Modele {
 			pst.setInt(1, unIdObjet);
 			pst.setString(2, unNomObjet);
 			int ins = pst.executeUpdate();
-			String requete2 = "INSERT INTO Vehicule";
+			String requete2 = "INSERT INTO Vehicule VALUES(?,?,?,?,?,?)";
+			pst = connexion.prepareStatement(requete2);
+			pst.setInt(1, unIdObjet);
+			pst.setInt(2, unIdTypeV);
+			pst.setString(3, unImmat);
+			pst.setString(4, unModele);
+			pst.setString(5, uneMarque);
+			pst.setInt(6, unNbPlace);
+			int ins2 = pst.executeUpdate();
+			if(ins == 1 & ins == 1) {
+				rep = true;
+			}
 		}
 		catch(SQLException e){
 			e.printStackTrace();
