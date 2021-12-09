@@ -171,7 +171,7 @@ public class Modele {
 	 * @return
 	 */
 	public static boolean ajouterVehicule(int unIdObjet, String unNomObjet, int unNbReservation, int unIdTypeV , String unImmat, String unModele, String uneMarque, int unNbPlace) {
-		boolean rep = false;
+	boolean rep = false;
 		try {
 			Modele.connexionBDD();
 			String requete1 = "INSERT INTO Objet(idObjet,nom) VALUES(?,?);";
@@ -196,5 +196,36 @@ public class Modele {
 			e.printStackTrace();
 		}
 		return rep;
+	}
+	
+	public static Materiel getMaterielById(int id) {
+		Materiel unMateriel = null;
+		try {
+			Modele.connexionBDD();
+			String sql = "SELECT Objet.idObjet, Objet.nom, Objet.nbReservation, Materiel.largeur, Materiel.longueur, Materiel.typeMat FROM Objet, Materiel WHERE Objet.idObjet = ? AND Objet.idObjet = Materiel.idMat;";
+			pst = connexion.prepareStatement(sql);
+			pst.setInt(1, id);
+			rs = pst.executeQuery();
+			while(rs.next()) {
+				int unId = rs.getInt(1);
+				String nom = rs.getString(2);
+				int nbReserv = rs.getInt(3);
+				double largeur = rs.getDouble(4);
+				double longueur = rs.getDouble(5);
+				String type = rs.getString(6);
+				unMateriel = new Materiel(unId,nom,nbReserv,largeur,longueur,type);
+			}
+		}catch(SQLException e) {
+			System.out.println("Erreur dans la fonction getLesObjets");
+			e.printStackTrace();
+		}
+		return unMateriel;
+	}
+	
+	
+	public static int recupInt(String uneChaine) {
+		String val = uneChaine.replaceAll("\\D+","");
+		int leInt = Integer.parseInt(val);
+		return leInt;
 	}
 }

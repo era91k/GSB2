@@ -13,4 +13,10 @@
 /V_MenuVisiteur$ActionVoirReservations.class
 /V_MenuVisiteur.class
 /V_ReserverMateriel.class
+<<<<<<< HEAD
+/V_ReserverMateriel$ActionDateDebut.class
+/V_ReserverMateriel$ActionVoirDetails.class
+/V_DetailObjet.class
+=======
 /Vehicule.class
+>>>>>>> branch 'master' of https://github.com/era91k/GSB2.git
