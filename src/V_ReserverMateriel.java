@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Properties;
 import javax.swing.*;
@@ -7,7 +9,7 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.SqlDateModel;
 import java.sql.Date;
 
-public class V_ReserverMateriel extends JPanel {
+public class V_ReserverMateriel extends JPanel implements ActionListener {
 	private JPanel pannelHaut;
 	private JPanel pannelBas;
 	private JLabel lblMateriel;
@@ -59,6 +61,7 @@ public class V_ReserverMateriel extends JPanel {
         this.btnDetails.setBackground(new Color(104, 109, 224));
         this.btnDetails.setPreferredSize(new Dimension(170,30));
         this.btnDetails.setBorder(null);
+        this.btnDetails.addActionListener(new ActionVoirDetails());
         
         
         //DatePickerDebut
@@ -94,4 +97,22 @@ public class V_ReserverMateriel extends JPanel {
         this.setVisible(true);
 	}
 	
+	class ActionVoirDetails implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			String objet = V_ReserverMateriel.this.liste.getSelectedItem().toString();
+			int id = Modele.recupInt(objet);
+			Materiel unMateriel = Modele.getMaterielById(id);
+			String detail = unMateriel.toString();
+			String titre = unMateriel.getNomObjet();
+			V_DetailObjet maVue = new V_DetailObjet(detail,titre);
+			
+		}
+
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 }
