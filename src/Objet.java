@@ -5,10 +5,12 @@ public abstract class Objet {
 	private int nbReservations;
 	
 	//Constructeur
-	public Objet() {
-		
-	}
-	
+	/**
+	 * Constructeur
+	 * @param unIdObjet
+	 * @param unNomObjet
+	 * @param unNbReservation
+	 */
 	public Objet(int unIdObjet, String unNomObjet, int unNbReservation) {
 		this.idObjet = unIdObjet;
 		this.nomObjet = unNomObjet;
