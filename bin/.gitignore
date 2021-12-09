@@ -1,2 +1,15 @@
+/Catalogue.class
 /DateLabelFormatter.class
-/V_ReserverMateriel$DateLabelFormatter.class
+/Main.class
+/Materiel.class
+/Modele.class
+/Objet.class
+/Type_Vehicule.class
+/Utilisateur.class
+/V_Connexion.class
+/V_MenuVisiteur$ActionDeconnexion.class
+/V_MenuVisiteur$ActionQuitter.class
+/V_MenuVisiteur$ActionReserverObjet.class
+/V_MenuVisiteur$ActionVoirReservations.class
+/V_MenuVisiteur.class
+/V_ReserverMateriel.class

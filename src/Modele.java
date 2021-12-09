@@ -20,7 +20,7 @@ public class Modele {
 	public static void connexionBDD() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connexion = DriverManager.getConnection("jdbc:mysql://localhost/gsb2?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "root", "");
+			connexion = DriverManager.getConnection("jdbc:mysql://172.16.203.218/gsb2?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "sio", "slam");
 			st = connexion.createStatement();
 		} 
 		catch (ClassNotFoundException erreur ) {
@@ -104,7 +104,7 @@ public class Modele {
 		try {
 			Modele.connexionBDD();
 			st = connexion.createStatement();
-			String sql = "SELECT objet.idObjet, objet.nom, objet.nbReservation, materiel.largeur, materiel.longueur, materiel.typeMat FROM objet, materiel WHERE objet.idObjet = materiel.idMat;";
+			String sql = "SELECT Objet.idObjet, Objet.nom, Objet.nbReservation, Materiel.largeur, Materiel.longueur, Materiel.typeMat FROM Objet, Materiel WHERE Objet.idObjet = Materiel.idMat;";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {
 				int id = rs.getInt(1);

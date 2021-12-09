@@ -11,6 +11,8 @@ public class V_Connexion extends JFrame implements ActionListener {
 	private JLabel lblMdp;
 	private JPasswordField jpfMdp;
 	private JButton btnValider;
+	private ImageIcon img;
+	private JLabel image;
 	
 	public V_Connexion() {
 		
@@ -21,7 +23,7 @@ public class V_Connexion extends JFrame implements ActionListener {
         //Arrêt du programme quand la croix "fermer" est cliquée
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Taille de la fenêtre
-        this.setSize(400, 380);
+        this.setSize(400, 600);
         this.setResizable(false); //<---Redimension de la fenetre impossible
         
         //Initialisation et paramétrage du panel
@@ -58,6 +60,13 @@ public class V_Connexion extends JFrame implements ActionListener {
         this.jpfMdp.setBounds(170,165,150,30);
         this.btnValider.setBounds(150,250,100,30);
         
+        //Image
+        this.img = new ImageIcon("C:/Users/eandrian/git/GSB22/logo.jpg");
+        this.image = new JLabel();
+        this.image.setIcon(img);
+        this.image.setBounds(100,300,200,200);
+        
+        
         //Ajouter les composants au panel
         monPanel.add(this.lblRaceio);
         monPanel.add(this.lblLogin);
@@ -65,6 +74,7 @@ public class V_Connexion extends JFrame implements ActionListener {
         monPanel.add(this.lblMdp);
         monPanel.add(this.jpfMdp);
         monPanel.add(this.btnValider);
+        monPanel.add(this.image);
         
         this.setAlwaysOnTop(true);
         this.getContentPane().add(monPanel);
