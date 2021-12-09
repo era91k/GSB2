@@ -136,7 +136,7 @@ public class Modele {
 		boolean rep = false;
 		try {
 			Modele.connexionBDD();
-			String requete1 = "INSERT INTO Objet(idObjet,nom) VALUES(?,?);";
+			String requete1 = "INSERT INTO Objet(idObjet,nom,nbReservation) VALUES(?,?,0);";
 			pst = connexion.prepareStatement(requete1);
 			pst.setInt(1, unIdObjet);
 			pst.setString(2, unNomObjet);
@@ -152,6 +152,23 @@ public class Modele {
 			}
 		}catch(SQLException e) {
 			System.out.println("Erreur dans la requête ajouterMat");
+			e.printStackTrace();
+		}
+		return rep;
+	}
+	
+	public static boolean ajouterVehicule(int unIdObjet, String unNomObjet) {
+		boolean rep = false;
+		try {
+			Modele.connexionBDD();
+			String requete1 = "INSERT INTO Objet(idObjet,nom) VALUES(?,?);";
+			pst = connexion.prepareStatement(requete1);
+			pst.setInt(1, unIdObjet);
+			pst.setString(2, unNomObjet);
+			int ins = pst.executeUpdate();
+			String requete2 = "INSERT INTO Vehicule";
+		}
+		catch(SQLException e){
 			e.printStackTrace();
 		}
 		return rep;
