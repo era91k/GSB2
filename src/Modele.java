@@ -122,4 +122,38 @@ public class Modele {
 		}
 		return lesMat;
 	}
+	
+	/**
+	 * Requete d'insertion de matériel dans la bdd
+	 * @param unIdObjet
+	 * @param unNomObjet
+	 * @param uneLargeur
+	 * @param uneLongueur
+	 * @param unType
+	 * @return
+	 */
+	public static boolean ajouterMat(int unIdObjet, String unNomObjet, double uneLargeur, double uneLongueur, String unType) {
+		boolean rep = false;
+		try {
+			Modele.connexionBDD();
+			String requete1 = "INSERT INTO Objet(idObjet,nom) VALUES(?,?);";
+			pst = connexion.prepareStatement(requete1);
+			pst.setInt(1, unIdObjet);
+			pst.setString(2, unNomObjet);
+			int ins = pst.executeUpdate();
+			String requete2 = "INSERT INTO Materiel VALUES(?,?,?);";
+			pst = connexion.prepareStatement(requete2);
+			pst.setDouble(1, uneLargeur);
+			pst.setDouble(2, uneLongueur);
+			pst.setString(3, unType);
+			int ins2 = pst.executeUpdate();
+			if (ins == 1 & ins2 == 1) {
+			rep = true;
+			}
+		}catch(SQLException e) {
+			System.out.println("Erreur dans la requête ajouterMat");
+			e.printStackTrace();
+		}
+		return rep;
+	}
 }
