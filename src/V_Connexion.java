@@ -17,7 +17,7 @@ public class V_Connexion extends JFrame implements ActionListener {
 	public V_Connexion() {
 		
 		//Titre
-        this.setTitle("Connexion à Raceio"); 
+        this.setTitle("Connexion à GSB2"); 
         //Localisation de la fenêtre (null = milieu)
         this.setLocationRelativeTo(null);
         //Arrêt du programme quand la croix "fermer" est cliquée
@@ -61,7 +61,7 @@ public class V_Connexion extends JFrame implements ActionListener {
         this.btnValider.setBounds(150,250,100,30);
         
         //Image
-        this.img = new ImageIcon("C:/Users/eandrian/git/GSB22/logo.jpg");
+        this.img = new ImageIcon("P:\\Workspace\\GSB2-master\\logo.jpg");
         this.image = new JLabel();
         this.image.setIcon(img);
         this.image.setBounds(100,300,200,200);
