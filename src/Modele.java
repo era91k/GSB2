@@ -272,4 +272,31 @@ public class Modele {
 		int leInt = Integer.parseInt(val);
 		return leInt;
 	}
+	
+	/**Ajouter une reservation, retourne vrai si maj effectué
+	 * @param idVisit
+	 * @param idObj
+	 * @param dateHeureDebut
+	 * @param dateHeureFin
+	 * @return
+	 */
+	public static boolean ajouterReservation(int idVisit, int idObj, String dateHeureDebut, String dateHeureFin) {
+		boolean rep = false;
+		try {
+			String sql = "INSERT INTO Reservation(idObjet, idUtilisateur, dateHeureDebut, dateHeureFin) VALUES (?,?,?,?);";
+			pst = connexion.prepareStatement(sql);
+			pst.setInt(1, idObj);
+			pst.setInt(2, idVisit);
+			pst.setString(3, dateHeureDebut);
+			pst.setString(4, dateHeureFin);
+			int ins = pst.executeUpdate();
+			if(ins == 1) {
+				rep = true;
+			}
+		}catch(SQLException e) {
+			System.out.println("Erreur dans la fonction ajouterReservation");
+			e.printStackTrace();
+		}
+		return rep;
+	}
 }
