@@ -96,14 +96,17 @@ public class V_Connexion extends JFrame implements ActionListener {
 						dispose();
 						break;
 					case "responsable" :
+						V_MenuResponsable fenResp = new V_MenuResponsable();
 						JOptionPane.showMessageDialog(this, "Connexion réussie - Responsable");
+						dispose();
 						break;
 					case "directeur" :
 						JOptionPane.showMessageDialog(this, "Connexion réussie - Directeur");
 						break;
 				}
-			}else {
-				//Utilisateur n'existe pas
+			}
+			else {
+				//Si l'utilisateur n'existe pas
 				JOptionPane.showMessageDialog(this, "Login ou mot de passe incorrect");
 			}
 		}

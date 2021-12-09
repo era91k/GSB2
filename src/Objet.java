@@ -16,12 +16,6 @@ public abstract class Objet {
 		this.nbReservations = unNbReservation;
 	}
 	
-	public Objet(Objet unObjet, Catalogue unCatalogue) {
-		this.idObjet = unObjet.getIdObjet();
-		this.nomObjet = unObjet.getNomObjet();
-		this.nbReservations = unObjet.getNbReservations();
-	}
-	
 	//Accesseurs
 	public int getIdObjet() {
 		return idObjet;
