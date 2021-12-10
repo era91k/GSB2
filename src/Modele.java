@@ -280,7 +280,7 @@ public class Modele {
 	 * @param dateFin
 	 * @return
 	 */
-	public static boolean ajouterMateriel(int idObjet, int idUser, String dateDebut, String dateFin) {
+	public static boolean ajouterReservation(int idObjet, int idUser, String dateDebut, String dateFin) {
 		boolean rep = false;
 		try {
 			Modele.connexionBDD();
