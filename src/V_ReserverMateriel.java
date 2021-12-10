@@ -20,11 +20,14 @@ public class V_ReserverMateriel extends JPanel implements ActionListener {
 	private JButton btnDetails;
 	private JDatePickerImpl datePicker;
 	private JDatePickerImpl datePicker2;
+	private int idVisiteur;
 	
-	public V_ReserverMateriel(ArrayList<Materiel> lesMateriels) {
+	public V_ReserverMateriel(ArrayList<Materiel> lesMateriels, int unIdVisiteur) {
+		this.idVisiteur = unIdVisiteur;
 		this.setPreferredSize(new Dimension(700,500));
 		this.setLayout(new BorderLayout());
 		
+		System.out.println(idVisiteur);
 		//Layout
         FlowLayout flowLay = new FlowLayout();
         flowLay.setVgap(40);
@@ -66,6 +69,7 @@ public class V_ReserverMateriel extends JPanel implements ActionListener {
         this.btnValider = new JButton("Valider");
         this.btnValider.setForeground(Color.white);
         this.btnValider.setBackground(new Color(104,109,224));
+        this.btnValider.addActionListener(new ActionValider());
         
         
         //DatePickerDebut
@@ -98,6 +102,7 @@ public class V_ReserverMateriel extends JPanel implements ActionListener {
         
         this.add(pannelHaut, BorderLayout.NORTH);
         this.add(pannelBas, BorderLayout.CENTER);
+        this.add(btnValider, BorderLayout.SOUTH);
         this.setVisible(true);
 	}
 	
@@ -113,6 +118,19 @@ public class V_ReserverMateriel extends JPanel implements ActionListener {
 			java.sql.Date dateFin = (java.sql.Date) V_ReserverMateriel.this.datePicker2.getModel().getValue();
 			String dateHeureDebut = dateDebut + " " + "08:00:00";
 			String dateHeureFin = dateFin + " " + "18:00:00";
+		}
+	}
+	
+	class ActionValider implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			String objet = V_ReserverMateriel.this.liste.getSelectedItem().toString();
+			int idObjet = Modele.recupInt(objet);
+			int idUser = V_ReserverMateriel.this.idVisiteur;
+			java.sql.Date dateDebut = (java.sql.Date) V_ReserverMateriel.this.datePicker.getModel().getValue();
+			java.sql.Date dateFin = (java.sql.Date) V_ReserverMateriel.this.datePicker2.getModel().getValue();
+			String dateHeureDebut = dateDebut + " " + "08:00:00";
+			String dateHeureFin = dateFin + " " + "18:00:00";
+			Modele.ajouterReservation(idObjet, idUser, dateHeureDebut, dateHeureFin);
 		}
 	}
 	

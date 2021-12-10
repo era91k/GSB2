@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.Hashtable;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -89,10 +90,12 @@ public class V_Connexion extends JFrame implements ActionListener {
 			String leMdp = new String(unMdp);
 			if(Modele.connexion(unLogin, leMdp)) {
 				//L'utilisateur existe
-				String role = Modele.verifRole(unLogin, leMdp);
+				Hashtable<String, String> ht = Modele.verifRole(unLogin, leMdp);
+				String role = ht.get("role");
+				int id = Modele.recupInt(ht.get("id"));
 				switch(role) {//On vérifie son rôle
 					case "visiteur" :
-						V_MenuVisiteur fenVisit = new V_MenuVisiteur();
+						V_MenuVisiteur fenVisit = new V_MenuVisiteur(id);
 						dispose();
 						break;
 					case "responsable" :

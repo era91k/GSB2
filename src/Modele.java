@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
+import java.util.Hashtable;
 public class Modele {
 
 	private static Connection connexion;
@@ -81,23 +81,28 @@ public class Modele {
 	 * @param String unMdp
 	 * @return String unRole
 	 */
-	public static String verifRole(String unLogin, String unMdp) {
+	public static Hashtable<String, String> verifRole(String unLogin, String unMdp) {
 		String unRole = "";
+		int unId;
+		Hashtable<String, String> ht = new Hashtable<String, String>();
 		try {
 			Modele.connexionBDD();
-			String sql = "SELECT role FROM Utilisateur WHERE login = ? AND mdp = sha1(?);";
+			String sql = "SELECT id, role FROM Utilisateur WHERE login = ? AND mdp = sha1(?);";
 			pst = connexion.prepareStatement(sql);
 			pst.setString(1, unLogin);
 			pst.setString(2, unMdp);
 			rs = pst.executeQuery();
 			while(rs.next()) {
-				unRole = rs.getString(1);
+				unId = rs.getInt(1);
+				unRole = rs.getString(2);
+				ht.put("id", Integer.toString(unId));
+				ht.put("role", unRole);
 			}
 		}catch(SQLException e) {
 			System.out.println("Erreur dans la fonction verifRole");
 			e.printStackTrace();
 		}
-		return unRole;
+		return ht;
 	}
 	
 	/**
