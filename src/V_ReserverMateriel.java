@@ -130,7 +130,17 @@ public class V_ReserverMateriel extends JPanel implements ActionListener {
 			java.sql.Date dateFin = (java.sql.Date) V_ReserverMateriel.this.datePicker2.getModel().getValue();
 			String dateHeureDebut = dateDebut + " " + "08:00:00";
 			String dateHeureFin = dateFin + " " + "18:00:00";
-			Modele.ajouterReservation(idObjet, idUser, dateHeureDebut, dateHeureFin);
+			JLabel notif = new JLabel();
+			if(Modele.ajouterReservation(idObjet, idUser, dateHeureDebut, dateHeureFin)) {
+				notif = new JLabel("Réservation enregistrée.");
+				notif.setForeground(Color.green);
+			}else {
+				notif = new JLabel("Réservation échouhée, veuillez ré-essayer.");
+				notif.setForeground(Color.red);
+			}
+			V_ReserverMateriel.this.pannelBas.add(notif);
+			V_ReserverMateriel.this.pannelBas.repaint();
+			V_ReserverMateriel.this.pannelBas.revalidate();
 		}
 	}
 	
