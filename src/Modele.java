@@ -272,4 +272,33 @@ public class Modele {
 		int leInt = Integer.parseInt(val);
 		return leInt;
 	}
+	
+	/**Ajouter un materiel
+	 * @param idObjet
+	 * @param idUser
+	 * @param dateDebut
+	 * @param dateFin
+	 * @return
+	 */
+	public static boolean ajouterMateriel(int idObjet, int idUser, String dateDebut, String dateFin) {
+		boolean rep = false;
+		try {
+			Modele.connexionBDD();
+			String sql = "INSERT INTO Reservation(idObjet, idUtilisateur, dateHeureDebut, dateHeureFin) VALUES (?,?,?,?);";
+			pst = connexion.prepareStatement(sql);
+			pst.setInt(1, idObjet);
+			pst.setInt(2, idUser);
+			pst.setString(3, dateDebut);
+			pst.setString(4, dateFin);
+			int ins = pst.executeUpdate();
+			if(ins == 1) {
+				rep = true;
+			}
+			rs.close();
+		}catch(SQLException e) {
+			System.out.println("Erreur dans la fonction ajouterMateriel");
+			e.printStackTrace();
+		}
+		return rep;
+	}
 }
