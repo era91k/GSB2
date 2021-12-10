@@ -21,12 +21,7 @@ public class Modele {
 	public static void connexionBDD() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-<<<<<<< HEAD
-			connexion = DriverManager.getConnection("jdbc:mysql://localhost:8889/gsb2?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "root", "root");
-=======
-			connexion = DriverManager.getConnection("jdbc:mysql://localhost/gsb2?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "root", ""
-					+ "");
->>>>>>> branch 'master' of https://github.com/era91k/GSB2.git
+			connexion = DriverManager.getConnection("jdbc:mysql://172.16.203.218/gsb2?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "sio","slam");
 			st = connexion.createStatement();
 		} 
 		catch (ClassNotFoundException erreur ) {
