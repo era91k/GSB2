@@ -1,9 +1,10 @@
 import java.awt.*;
+import java.util.Hashtable;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 public class V_Connexion extends JFrame implements ActionListener {
-	//Attributs privés
+	//Attributs privÃ©s
 	private JPanel monPanel;
 	private JLabel lblRaceio;
 	private JLabel lblLogin;
@@ -17,16 +18,16 @@ public class V_Connexion extends JFrame implements ActionListener {
 	public V_Connexion() {
 		
 		//Titre
-        this.setTitle("Connexion à GSB2"); 
-        //Localisation de la fenêtre (null = milieu)
+        this.setTitle("Connexion Ã  GSB2"); 
+        //Localisation de la fenÃªtre (null = milieu)
         this.setLocationRelativeTo(null);
-        //Arrêt du programme quand la croix "fermer" est cliquée
+        //Arrï¿½t du programme quand la croix "fermer" est cliquÃ©e
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //Taille de la fenêtre
+        //Taille de la fenï¿½tre
         this.setSize(400, 600);
         this.setResizable(false); //<---Redimension de la fenetre impossible
         
-        //Initialisation et paramétrage du panel
+        //Initialisation et paramÃ©trage du panel
         this.monPanel = new JPanel();
         this.monPanel.setLayout(null);
         this.monPanel.setBackground(new Color(48, 51, 107));
@@ -61,7 +62,7 @@ public class V_Connexion extends JFrame implements ActionListener {
         this.btnValider.setBounds(150,250,100,30);
         
         //Image
-        //this.img = new ImageIcon(getClass().getResource("images/logo.jpg"));
+        this.img = new ImageIcon(getClass().getResource("logo.jpg"));
         this.image = new JLabel();
         this.image.setIcon(img);
         this.image.setBounds(100,300,200,200);
@@ -89,19 +90,20 @@ public class V_Connexion extends JFrame implements ActionListener {
 			String leMdp = new String(unMdp);
 			if(Modele.connexion(unLogin, leMdp)) {
 				//L'utilisateur existe
-				String role = Modele.verifRole(unLogin, leMdp);
-				switch(role) {//On vérifie son rôle
+				Hashtable<String, String> ht = Modele.verifRole(unLogin, leMdp);
+				String role = ht.get("role");
+				int id = Modele.recupInt(ht.get("id"));
+				switch(role) {//On vÃ©rifie son rÃ´le
 					case "visiteur" :
-						V_MenuVisiteur fenVisit = new V_MenuVisiteur();
+						V_MenuVisiteur fenVisit = new V_MenuVisiteur(id);
 						dispose();
 						break;
 					case "responsable" :
 						V_MenuResponsable fenResp = new V_MenuResponsable();
-						JOptionPane.showMessageDialog(this, "Connexion réussie - Responsable");
 						dispose();
 						break;
 					case "directeur" :
-						JOptionPane.showMessageDialog(this, "Connexion réussie - Directeur");
+						JOptionPane.showMessageDialog(this, "Connexion reussie - Directeur");
 						break;
 				}
 			}

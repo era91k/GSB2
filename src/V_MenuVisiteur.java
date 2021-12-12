@@ -13,8 +13,10 @@ public class V_MenuVisiteur extends JFrame implements ActionListener {
 	private JMenuItem voirReservations;
 	private JMenuItem seDeconnect;
 	private JMenuItem quitter;
+	private int idVisiteur;
 	
-	public V_MenuVisiteur() {
+	public V_MenuVisiteur(int unIdVisiteur) {
+		this.idVisiteur = unIdVisiteur;
 		//Titre
         this.setTitle("Bienvenu(e) dans GSB2"); 
         //Localisation de la fenêtre (null = milieu)
@@ -56,8 +58,6 @@ public class V_MenuVisiteur extends JFrame implements ActionListener {
         this.menuDeconnexion.add(quitter);
         this.menu.add(this.menuDeconnexion);
         
-
-        
         //Couleur des composants
         this.menuReservation.setForeground(new Color(206, 214, 224));
         this.menuDeconnexion.setForeground(new Color(206, 214, 224));
@@ -72,8 +72,9 @@ public class V_MenuVisiteur extends JFrame implements ActionListener {
 	class ActionReserverObjet implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			ArrayList<Materiel> lesMat = Modele.getLesMateriels();
+			int idVisiteur = V_MenuVisiteur.this.idVisiteur;
 			V_MenuVisiteur.this.getContentPane().removeAll();
-			V_MenuVisiteur.this.getContentPane().add(new V_ReserverMateriel(lesMat));
+			V_MenuVisiteur.this.getContentPane().add(new V_ReserverMateriel(lesMat, idVisiteur));
 			V_MenuVisiteur.this.revalidate();
 			V_MenuVisiteur.this.setVisible(true);
 			

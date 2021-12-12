@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
+import java.util.Hashtable;
 public class Modele {
 
 	private static Connection connexion;
@@ -15,13 +15,14 @@ public class Modele {
 	private static PreparedStatement pst;
 	
 	/**
-	 * Procédure qui permet la connexion à la bdd
+	 * ProcÃ©dure qui permet la connexion Ã  la bdd
 	 * 
 	 */
 	public static void connexionBDD() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connexion = DriverManager.getConnection("jdbc:mysql://localhost/gsb2?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "root", "");
+
 			st = connexion.createStatement();
 		} 
 		catch (ClassNotFoundException erreur ) {
@@ -33,7 +34,7 @@ public class Modele {
 	}
 	
 	/**
-	 * Procédure qui déconnecte de la bdd
+	 * ProcÃ©dure qui dÃ©connecte de la bdd
 	 * 
 	 */
 	public static void deconnexion() {
@@ -46,7 +47,7 @@ public class Modele {
 	}
 	
 	/**
-	 * Vérifie si l'utilisateur en paramètres existe dans la bdd et renvoie vrai si il existe
+	 * VÃ©rifie si l'utilisateur en paramÃ¨tres existe dans la bdd et renvoie vrai si il existe
 	 * @param String unLogin
 	 * @param String unMdp
 	 * @return boolean rep
@@ -76,32 +77,37 @@ public class Modele {
 	}
 	
 	/**
-	 * Retourne une chaîne correspondant au rôle de l'utilisateur passé en paramètres
+	 * Retourne une chaÃ®ne correspondant au rÃ´le de l'utilisateur passÃ© en paramÃ¨tres
 	 * @param String unLogin
 	 * @param String unMdp
 	 * @return String unRole
 	 */
-	public static String verifRole(String unLogin, String unMdp) {
+	public static Hashtable<String, String> verifRole(String unLogin, String unMdp) {
 		String unRole = "";
+		int unId;
+		Hashtable<String, String> ht = new Hashtable<String, String>();
 		try {
 			Modele.connexionBDD();
-			String sql = "SELECT role FROM Utilisateur WHERE login = ? AND mdp = sha1(?);";
+			String sql = "SELECT id, role FROM Utilisateur WHERE login = ? AND mdp = sha1(?);";
 			pst = connexion.prepareStatement(sql);
 			pst.setString(1, unLogin);
 			pst.setString(2, unMdp);
 			rs = pst.executeQuery();
 			while(rs.next()) {
-				unRole = rs.getString(1);
+				unId = rs.getInt(1);
+				unRole = rs.getString(2);
+				ht.put("id", Integer.toString(unId));
+				ht.put("role", unRole);
 			}
 		}catch(SQLException e) {
 			System.out.println("Erreur dans la fonction verifRole");
 			e.printStackTrace();
 		}
-		return unRole;
+		return ht;
 	}
 	
 	/**
-	 * Recuper tous les matériels de la bdd et les retourne dans une collection de Materiel
+	 * Recuper tous les matÃ©riels de la bdd et les retourne dans une collection de Materiel
 	 * @return lesMateriel
 	 */
 	public static ArrayList<Materiel> getLesMateriels(){
@@ -129,7 +135,7 @@ public class Modele {
 	}
 	
 	/**
-	 * Recuper tous les véhicules de la bdd et les retourne dans une collection de Vehicule
+	 * Recuper tous les vÃ©hicules de la bdd et les retourne dans une collection de Vehicule
 	 * @return lesMateriel
 	 */
 	public static ArrayList<Vehicule> getLesVehicules(){
@@ -159,7 +165,7 @@ public class Modele {
 	}
 	
 	/**
-	 * Méthode d'insertion de matériel dans la bdd
+	 * MÃ©thode d'insertion de matÃ©riel dans la bdd
 	 * @param unIdObjet
 	 * @param unNomObjet
 	 * @param uneLargeur
@@ -187,14 +193,14 @@ public class Modele {
 				rep = true;
 			}
 		}catch(SQLException e) {
-			System.out.println("Erreur dans la requête ajouterMat");
+			System.out.println("Erreur dans la requï¿½te ajouterMat");
 			e.printStackTrace();
 		}
 		return rep;
 	}
 	
 	/**
-	 * Méthode d'insertion de véhicule dans la bdd
+	 * MÃ©thode d'insertion de vÃ©hicule dans la bdd
 	 * @param unIdObjet
 	 * @param unNomObjet
 	 * @param unNbReservation
@@ -234,7 +240,7 @@ public class Modele {
 	}
 	
 	/**
-	 * Méthode récupérant l'id d'un objet de type Materiel
+	 * MÃ©thode rï¿½cupï¿½rant l'id d'un objet de type Materiel
 	 * @param id
 	 * @return
 	 */
@@ -263,7 +269,7 @@ public class Modele {
 	}
 	
 	/**
-	 * Méthode récupérant uniquement l'id d'un objet
+	 * MÃ©thode rÃ©cupÃ©rant uniquement l'id d'un objet
 	 * @param uneChaine
 	 * @return
 	 */
@@ -272,29 +278,31 @@ public class Modele {
 		int leInt = Integer.parseInt(val);
 		return leInt;
 	}
-	
-	/**Ajouter une reservation, retourne vrai si maj effectué
-	 * @param idVisit
-	 * @param idObj
-	 * @param dateHeureDebut
-	 * @param dateHeureFin
+
+	/**Ajouter un materiel
+	 * @param idObjet
+	 * @param idUser
+	 * @param dateDebut
+	 * @param dateFin
 	 * @return
 	 */
-	public static boolean ajouterReservation(int idVisit, int idObj, String dateHeureDebut, String dateHeureFin) {
+	public static boolean ajouterReservation(int idObjet, int idUser, String dateDebut, String dateFin) {
 		boolean rep = false;
 		try {
+			Modele.connexionBDD();
 			String sql = "INSERT INTO Reservation(idObjet, idUtilisateur, dateHeureDebut, dateHeureFin) VALUES (?,?,?,?);";
 			pst = connexion.prepareStatement(sql);
-			pst.setInt(1, idObj);
-			pst.setInt(2, idVisit);
-			pst.setString(3, dateHeureDebut);
-			pst.setString(4, dateHeureFin);
+			pst.setInt(1, idObjet);
+			pst.setInt(2, idUser);
+			pst.setString(3, dateDebut);
+			pst.setString(4, dateFin);
 			int ins = pst.executeUpdate();
 			if(ins == 1) {
 				rep = true;
 			}
+			rs.close();
 		}catch(SQLException e) {
-			System.out.println("Erreur dans la fonction ajouterReservation");
+			System.out.println("Erreur dans la fonction ajouterMateriel");
 			e.printStackTrace();
 		}
 		return rep;
