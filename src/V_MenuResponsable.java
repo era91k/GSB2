@@ -73,7 +73,7 @@ public class V_MenuResponsable extends JFrame implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			ArrayList<Materiel> lesMat = Modele.getLesMateriels();
 			V_MenuResponsable.this.getContentPane().removeAll();
-			V_MenuResponsable.this.getContentPane().add(new V_AjoutMat(lesMat));
+			//V_MenuResponsable.this.getContentPane().add(new V_AjoutMat(lesMat));
 			V_MenuResponsable.this.revalidate();
 			V_MenuResponsable.this.setVisible(true);
 			
