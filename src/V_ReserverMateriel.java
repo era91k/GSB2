@@ -117,10 +117,6 @@ public class V_ReserverMateriel extends JPanel implements ActionListener {
 			String detail = unMateriel.toString();
 			String titre = unMateriel.getNomObjet();
 			V_DetailObjet maVue = new V_DetailObjet(detail,titre);
-			java.sql.Date dateDebut = (java.sql.Date) V_ReserverMateriel.this.datePicker.getModel().getValue();
-			java.sql.Date dateFin = (java.sql.Date) V_ReserverMateriel.this.datePicker2.getModel().getValue();
-			String dateHeureDebut = dateDebut + " " + "08:00:00";
-			String dateHeureFin = dateFin + " " + "18:00:00";
 		}
 	}
 	
