@@ -15,6 +15,7 @@ public class V_ReserverMateriel extends JPanel implements ActionListener {
 	private JLabel lblMateriel;
 	private JLabel lblDateDebut;
 	private JLabel lblDateFin;
+	private JLabel lblNotif;
 	private JComboBox<String> liste;
 	private JButton btnValider;
 	private JButton btnDetails;
@@ -57,6 +58,7 @@ public class V_ReserverMateriel extends JPanel implements ActionListener {
         this.lblDateDebut.setForeground(Color.white);
         this.lblDateFin = new JLabel("Date fin :");
         this.lblDateFin.setForeground(Color.white);
+        this.lblNotif = new JLabel("");
         
         //JButton
         this.btnDetails = new JButton("Voir les caractéristiques");
@@ -99,6 +101,7 @@ public class V_ReserverMateriel extends JPanel implements ActionListener {
         this.pannelBas.add(this.datePicker);
         this.pannelBas.add(this.lblDateFin);
         this.pannelBas.add(this.datePicker2);
+        this.pannelBas.add(this.lblNotif);
         
         this.add(pannelHaut, BorderLayout.NORTH);
         this.add(pannelBas, BorderLayout.CENTER);
@@ -130,15 +133,13 @@ public class V_ReserverMateriel extends JPanel implements ActionListener {
 			java.sql.Date dateFin = (java.sql.Date) V_ReserverMateriel.this.datePicker2.getModel().getValue();
 			String dateHeureDebut = dateDebut + " " + "08:00:00";
 			String dateHeureFin = dateFin + " " + "18:00:00";
-			JLabel notif = new JLabel();
 			if(Modele.ajouterReservation(idObjet, idUser, dateHeureDebut, dateHeureFin)) {
-				notif = new JLabel("Réservation enregistrée.");
-				notif.setForeground(Color.green);
+				V_ReserverMateriel.this.lblNotif.setText("Reservation enregistrée.");
+				V_ReserverMateriel.this.lblNotif.setForeground(Color.green);
 			}else {
-				notif = new JLabel("Réservation échouhée, veuillez ré-essayer.");
-				notif.setForeground(Color.red);
+				V_ReserverMateriel.this.lblNotif.setText("Réservation échouhée, veuillez ré-essayer.");
+				V_ReserverMateriel.this.lblNotif.setForeground(Color.red);
 			}
-			V_ReserverMateriel.this.pannelBas.add(notif);
 			V_ReserverMateriel.this.pannelBas.repaint();
 			V_ReserverMateriel.this.pannelBas.revalidate();
 		}
