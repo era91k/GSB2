@@ -30,3 +30,6 @@
 /Vehicule.class
 /V_AjoutMat$ActionValider.class
 >>>>>>> branch 'master' of https://github.com/era91k/GSB2.git
+/V_ReserverVoiture.class
+/V_ReserverVoiture$ActionVoirDetails.class
+/V_ReserverVoiture$ActionValider.class

@@ -46,7 +46,7 @@ public class V_MenuVisiteur extends JFrame implements ActionListener {
         this.reserverVoiture = new JMenuItem("Reserver une voiture");
         this.reserverObjet.addActionListener(new ActionReserverObjet());
         this.voirReservations.addActionListener(new ActionVoirReservations());
-        //this.reserverVoiture.addActionListener(new ActionReserverVoiture());
+        this.reserverVoiture.addActionListener(new ActionReserverVoiture());
         this.menuReservation.add(reserverObjet);
         this.menuReservation.add(this.reserverVoiture);
         this.menuReservation.add(voirReservations);
@@ -85,17 +85,17 @@ public class V_MenuVisiteur extends JFrame implements ActionListener {
 		}
 	}
 	
-	/*class ActionReserverVoiture implements ActionListener{
+	class ActionReserverVoiture implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			ArrayList<Materiel> lesMat = Modele.getLesMateriels();
+			ArrayList<Vehicule> lesMat = Modele.getLesVehicules();
 			int idVisiteur = V_MenuVisiteur.this.idVisiteur;
 			V_MenuVisiteur.this.getContentPane().removeAll();
-			V_MenuVisiteur.this.getContentPane().add(new V_ReserverMateriel(lesMat, idVisiteur));
+			V_MenuVisiteur.this.getContentPane().add(new V_ReserverVoiture(lesMat, idVisiteur));
 			V_MenuVisiteur.this.revalidate();
 			V_MenuVisiteur.this.setVisible(true);
 			
 		}
-	}*/
+	}
 
 	
 	class ActionVoirReservations implements ActionListener{

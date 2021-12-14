@@ -6,6 +6,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Hashtable;
+/**
+ * @author eandrian
+ *
+ */
+/**
+ * @author eandrian
+ *
+ */
 public class Modele {
 
 	private static Connection connexion;
@@ -268,6 +276,38 @@ public class Modele {
 			e.printStackTrace();
 		}
 		return unMateriel;
+	}
+	/**
+	 * Recuperer un vehicule a partir de son id
+	 * @param id
+	 * @return
+	 */
+	public static Vehicule getVehiculeById(int id) {
+		Vehicule unVehicule = null;
+		try {
+			Modele.connexionBDD();
+			String sql = "SELECT * FROM Objet, Vehicule, TypeVehicule WHERE Objet.idObjet = Vehicule.idVehicule AND Objet.idObjet = ?;";
+			pst = connexion.prepareStatement(sql);
+			pst.setInt(1, id);
+			rs = pst.executeQuery();
+			while(rs.next()) {
+				int unId = rs.getInt(1);
+				String nom = rs.getString(2);
+				int nbReserv = rs.getInt(3);
+				int idTypeV = rs.getInt(5);
+				String immat = rs.getString(6);
+				String modele = rs.getString(7);
+				String marque = rs.getString(8);
+				int nbPlaces = rs.getInt(9);
+				String libelle = rs.getString(11);
+				Type_Vehicule unType = new Type_Vehicule(idTypeV,libelle);
+				unVehicule = new Vehicule(unId,nom,nbReserv,unType,immat,modele,marque,nbPlaces);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println("Erreur dans la fonction getVehiculeById");
+		}
+		return unVehicule;
 	}
 	
 	/**
