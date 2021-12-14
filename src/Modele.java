@@ -336,7 +336,7 @@ public class Modele {
 			}
 			rs.close();
 		}catch(SQLException e) {
-			System.out.println("Erreur dans la fonction ajouterMateriel");
+			System.out.println("Erreur dans la fonction ajouterReservation");
 			e.printStackTrace();
 		}
 		return rep;
