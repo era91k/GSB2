@@ -6,14 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Hashtable;
-/**
- * @author eandrian
- *
- */
-/**
- * @author eandrian
- *
- */
 public class Modele {
 
 	private static Connection connexion;
@@ -350,5 +342,31 @@ public class Modele {
 		return rep;
 	}
 	
+	/**
+	 * Methode de suppression d'objet de la bdd
+	 * @param unId
+	 * @return
+	 */
+	public static boolean supprimerMat (int unId) {
+		Modele.connexionBDD();
+		String requete;
+		String req;
+		int ins;
+		int ins2;
+		boolean rep = false;
+		try {
+			requete = "DELETE FROM Objet WHERE idObjet = ?";
+			ins = st.executeUpdate(requete);
+			req = "DELETE FROM Materiel WHERE idMat = ?";
+			ins2 = st.executeUpdate(req);
+			if (ins == 1 && ins2 == 1) {
+				rep = true;
+			}
+		} 
+		catch (SQLException erreur) {
+			erreur.printStackTrace();
+		}
+		return rep;
+	}
 	
 }
