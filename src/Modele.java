@@ -21,7 +21,7 @@ public class Modele {
 	public static void connexionBDD() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connexion = DriverManager.getConnection("jdbc:mysql://172.16.203.217/gsb2?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "sio", "slam");
+			connexion = DriverManager.getConnection("jdbc:mysql://172.16.203.218/gsb2?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "sio", "slam");
 
 			st = connexion.createStatement();
 		} 
@@ -143,18 +143,20 @@ public class Modele {
 		try {
 			Modele.connexionBDD();
 			st = connexion.createStatement();
-			String sql = "SELECT Objet.idObjet, Objet.nom, Objet.nbReservation, Vehicule.idTypeV, Vehicule.immat, Vehicule.modele, Vehicule.marque, Vehicule.nbPlaces FROM Objet, Vehicule WHERE Objet.idObjet = Vehicule.idVehicule;";
+			String sql = "SELECT * FROM Objet, Vehicule, TypeVehicule WHERE Objet.idObjet = Vehicule.idVehicule";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {
 				int id = rs.getInt(1);
 				String nom = rs.getString(2);
 				int nbReserv = rs.getInt(3);
-				int idTypeV = rs.getInt(4);
-				String immat = rs.getString(5);
-				String modele = rs.getString(6);
-				String marque = rs.getString(7);
-				int nbPlaces = rs.getInt(8);
-				Vehicule unVehicule = new Vehicule(id,nom,nbReserv,idTypeV,immat,modele,marque,nbPlaces);
+				int idTypeV = rs.getInt(5);
+				String immat = rs.getString(6);
+				String modele = rs.getString(7);
+				String marque = rs.getString(8);
+				int nbPlaces = rs.getInt(9);
+				String libelle = rs.getString(11);
+				Type_Vehicule unType = new Type_Vehicule(idTypeV,libelle);
+				Vehicule unVehicule = new Vehicule(id,nom,nbReserv,unType,immat,modele,marque,nbPlaces);
 				lesVehicules.add(unVehicule);
 			}
 		}catch(SQLException e) {
