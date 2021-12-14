@@ -10,6 +10,7 @@ public class V_MenuVisiteur extends JFrame implements ActionListener {
 	private JMenu menuReservation;
 	private JMenu menuDeconnexion;
 	private JMenuItem reserverObjet;
+	private JMenuItem reserverVoiture;
 	private JMenuItem voirReservations;
 	private JMenuItem seDeconnect;
 	private JMenuItem quitter;
@@ -38,17 +39,20 @@ public class V_MenuVisiteur extends JFrame implements ActionListener {
         this.menu.setPreferredSize(new Dimension(700,35));
         this.menu.setBorder(BorderFactory.createLineBorder(new Color(47, 53, 66)));
         
-        //Partie Gestion des Courses
+        //Partie Gestion des reservaations
         this.menuReservation = new JMenu("Reservation");
         this.reserverObjet = new JMenuItem("Reserver un objet");
         this.voirReservations = new JMenuItem("Voir mes reservations");
+        this.reserverVoiture = new JMenuItem("Reserver une voiture");
         this.reserverObjet.addActionListener(new ActionReserverObjet());
         this.voirReservations.addActionListener(new ActionVoirReservations());
+        this.reserverVoiture.addActionListener(new ActionReserverVoiture());
         this.menuReservation.add(reserverObjet);
+        this.menuReservation.add(this.reserverVoiture);
         this.menuReservation.add(voirReservations);
         this.menu.add(menuReservation);
         
-        //Partie Gestion des écuries
+        //Partie deconnexion
         this.menuDeconnexion = new JMenu("Deconnexion");
         this.seDeconnect = new JMenuItem("Se déconnecter");
         this.quitter = new JMenuItem("Quitter");
@@ -70,6 +74,18 @@ public class V_MenuVisiteur extends JFrame implements ActionListener {
 	}
 	
 	class ActionReserverObjet implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			ArrayList<Materiel> lesMat = Modele.getLesMateriels();
+			int idVisiteur = V_MenuVisiteur.this.idVisiteur;
+			V_MenuVisiteur.this.getContentPane().removeAll();
+			V_MenuVisiteur.this.getContentPane().add(new V_ReserverMateriel(lesMat, idVisiteur));
+			V_MenuVisiteur.this.revalidate();
+			V_MenuVisiteur.this.setVisible(true);
+			
+		}
+	}
+	
+	class ActionReserverVoiture implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			ArrayList<Materiel> lesMat = Modele.getLesMateriels();
 			int idVisiteur = V_MenuVisiteur.this.idVisiteur;
