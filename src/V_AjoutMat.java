@@ -23,26 +23,26 @@ public class V_AjoutMat extends JPanel implements ActionListener{
 	private JButton btnValider;
 	
 	public V_AjoutMat(ArrayList<Materiel> lesMat) {
-		
 		this.setPreferredSize(new Dimension(700,500));
+		this.setBackground(new Color(48, 51, 107));
 		this.setLayout(new BorderLayout());
         
 		//Panel
 		this.pannelHaut = new JPanel();
-		this.pannelHaut.setLayout(layout);
-        this.pannelHaut.setBackground(new Color(48, 51, 107));
-        this.pannelHaut.setLayout(new BorderLayout());
-        
         this.pannelBas = new JPanel();
-        this.pannelBas.setLayout(layout);
+        this.pannelHaut.setBackground(new Color(48, 51, 107));
         this.pannelBas.setBackground(new Color(48, 51, 107));
-        this.pannelBas.setLayout(new BorderLayout());
+        this.pannelHaut.setLayout(new BorderLayout());
+        this.layout = new GroupLayout(this.pannelBas);
+        this.layout.setAutoCreateGaps(true);
+        this.layout.setAutoCreateContainerGaps(true);
+        this.pannelBas.setLayout(this.layout);
         
         //JLabel
   		this.lblId = new JLabel("Id du matériel :");
   		this.lblId.setForeground(Color.white);
   		this.jtfId = new JTextField ("");
-		this.jtfId.setMaximumSize(new Dimension(100,30));
+		this.jtfId.setMaximumSize(new Dimension(150,30));
   		
 		this.lblNom = new JLabel("Nom du matériel :");
 		this.lblNom.setForeground(Color.white);
@@ -70,10 +70,6 @@ public class V_AjoutMat extends JPanel implements ActionListener{
         this.btnValider.addActionListener(new ActionValider());
 
         //GroupLayout
-        layout = new GroupLayout(pannelBas);
-        layout.setAutoCreateGaps(true);
-        layout.setAutoCreateContainerGaps(true);
-        
         layout.setHorizontalGroup(layout.createSequentialGroup() 
     			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING) 
     					.addComponent(lblId)
@@ -88,6 +84,25 @@ public class V_AjoutMat extends JPanel implements ActionListener{
     					.addComponent(jtfLongueur)
     					)
     			);
+        layout.setVerticalGroup(layout.createSequentialGroup()
+        		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+        				.addComponent(lblId)
+        				.addComponent(lblLargeur))
+        		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        				.addGroup (layout.createSequentialGroup()
+        						.addComponent(jtfId)
+        						.addComponent(lblNom)
+        						.addComponent(jtfNom)
+        						)
+        				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        					.addGroup(layout.createSequentialGroup()
+        							.addComponent(jtfLargeur)
+        							.addComponent(lblLongueur)
+        							.addComponent(jtfLongueur))
+        							)
+        				)
+        		);
+        	
         
         this.add(pannelHaut, BorderLayout.NORTH);
         this.add(pannelBas, BorderLayout.CENTER);
