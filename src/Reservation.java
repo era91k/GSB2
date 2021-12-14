@@ -1,17 +1,19 @@
+import java.sql.Timestamp;
+
 public class Reservation {
 	//Attributs privés
 	private int idReservation;
 	private Objet unObjet;
 	private int idUtilisateur;
 	private int duree;
-	private java.sql.Time dateHeureDebut;
-	private java.sql.Time dateHeureFin;
+	private Timestamp dateHeureDebut;
+	private Timestamp dateHeureFin;
 	
 	public Reservation() {
 		
 	}
 	
-	public Reservation(int unIdReservation, Objet leObjet, int unIdUtilisateur, int uneDuree, java.sql.Time uneDateHeureDebut, java.sql.Time dateHeureFin) {
+	public Reservation(int unIdReservation, Objet leObjet, int unIdUtilisateur, int uneDuree, Timestamp uneDateHeureDebut, Timestamp dateHeureFin) {
 		this.idReservation = unIdReservation;
 		this.unObjet = leObjet;
 		this.idUtilisateur = unIdUtilisateur;
@@ -52,19 +54,19 @@ public class Reservation {
 		this.duree = duree;
 	}
 
-	public java.sql.Time getDateHeureDebut() {
+	public Timestamp getDateHeureDebut() {
 		return dateHeureDebut;
 	}
 
-	public void setDateHeureDebut(java.sql.Time dateHeureDebut) {
+	public void setDateHeureDebut(Timestamp dateHeureDebut) {
 		this.dateHeureDebut = dateHeureDebut;
 	}
 
-	public java.sql.Time getDateHeureFin() {
+	public Timestamp getDateHeureFin() {
 		return dateHeureFin;
 	}
 
-	public void setDateHeureFin(java.sql.Time dateHeureFin) {
+	public void setDateHeureFin(Timestamp dateHeureFin) {
 		this.dateHeureFin = dateHeureFin;
 	}
 	

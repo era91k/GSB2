@@ -100,8 +100,10 @@ public class V_MenuVisiteur extends JFrame implements ActionListener {
 	
 	class ActionVoirReservations implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
+			int idVisiteur = V_MenuVisiteur.this.idVisiteur;
+			ArrayList<Reservation> lesReservations = Modele.getReservation(idVisiteur);
 			V_MenuVisiteur.this.getContentPane().removeAll();
-			//V_MenuVisiteur.this.getContentPane().add(new V_Supression(lesCourses));
+			V_MenuVisiteur.this.getContentPane().add(new V_voirReservation(lesReservations, idVisiteur));
 			V_MenuVisiteur.this.revalidate();
 			V_MenuVisiteur.this.setVisible(true);
 		}

@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Hashtable;
 public class Modele {
@@ -21,7 +22,7 @@ public class Modele {
 	public static void connexionBDD() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connexion = DriverManager.getConnection("jdbc:mysql://172.16.203.218/gsb2?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "sio", "slam");
+			connexion = DriverManager.getConnection("jdbc:mysql://localhost/gsb2?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "root", "");
 
 			st = connexion.createStatement();
 		} 
@@ -367,6 +368,64 @@ public class Modele {
 			erreur.printStackTrace();
 		}
 		return rep;
+	}
+	/**
+	 * Recupere toutes les reservations d'un visiteur a partir de son id et retourne une collection de reservations
+	 * @param id
+	 * @return
+	 */
+	public static ArrayList<Reservation> getReservation(int id){
+		ArrayList<Reservation> lesReservations = new ArrayList<Reservation>();
+		try {//On recupere d'abord les reservations de véhicule
+			String sql = "SELECT reservation.idReservation, reservation.idObjet, reservation.duree, reservation.dateHeureDebut, reservation.dateHeureFin, vehicule.idTypeV, vehicule.immat, vehicule.modele, vehicule.marque, vehicule.nbPlaces, typevehicule.libelle, objet.nom, objet.nbReservation FROM reservation, vehicule, typevehicule, objet WHERE reservation.idUtilisateur = ? AND reservation.idObjet = vehicule.idVehicule AND vehicule.idVehicule = objet.idObjet AND vehicule.idTypeV = typevehicule.idTypeV AND reservation.idObjet IN (SELECT vehicule.idVehicule FROM vehicule) GROUP BY reservation.idReservation";
+			pst = connexion.prepareStatement(sql);
+			pst.setInt(1, id);
+			rs = pst.executeQuery();
+			while(rs.next()) {
+				int idVehicule = rs.getInt("idObjet");
+				int idTypeV = rs.getInt("idTypeV");
+				String nom = rs.getString("nom");
+				String immat = rs.getString("immat");
+				String modele = rs.getString("modele");
+				String marque = rs.getString("marque");
+				int nbPlaces = rs.getInt("nbPlaces");
+				String libelle = rs.getString("libelle");
+				int idReserv = rs.getInt("idReservation");
+				int duree = rs.getInt("duree");
+				int nbReserv = rs.getInt("nbReservation");
+				Timestamp dateHeureDebut = rs.getTimestamp("dateHeureDebut");
+				Timestamp dateHeureFin = rs.getTimestamp("dateHeureFin");
+				Type_Vehicule unType = new Type_Vehicule(idTypeV, libelle);
+				Vehicule unVehicule = new Vehicule(idVehicule, nom, nbReserv, unType, immat, modele, marque, nbPlaces);
+				Reservation uneReservation = new Reservation(idReserv, unVehicule, id, duree, dateHeureDebut, dateHeureFin);
+				lesReservations.add(uneReservation);	
+			}
+			//On recupere ensuite les reservations de materiel
+			String sql2 = "SELECT reservation.idReservation, reservation.idObjet, reservation.duree, reservation.dateHeureDebut, reservation.dateHeureFin, materiel.idMat, materiel.largeur, materiel.longueur, materiel.typeMat, objet.nom, objet.nbReservation FROM reservation, materiel, objet WHERE reservation.idObjet = materiel.idMat AND materiel.idMat = objet.idObjet AND reservation.idUtilisateur = ? AND reservation.idObjet IN (SELECT materiel.idMat FROM materiel) GROUP BY reservation.idReservation;";
+			pst = connexion.prepareStatement(sql2);
+			pst.setInt(1, id);
+			rs = pst.executeQuery();
+			while(rs.next()) {
+				int idMat = rs.getInt("idObjet");
+				String nom = rs.getString("nom");
+				int nbReserv = rs.getInt("nbReservation");
+				double largeur = rs.getDouble("largeur");
+				double longueur = rs.getDouble("longueur");
+				String typeMat = rs.getString("typeMat");
+				Materiel unMateriel = new Materiel(idMat, nom, nbReserv, largeur, longueur, typeMat);
+				int idReservation = rs.getInt("idReservation");
+				int duree = rs.getInt("duree");
+				Timestamp dateHeureDebut = rs.getTimestamp("dateHeureDebut");
+				Timestamp dateHeureFin = rs.getTimestamp("dateHeureFin");
+				Reservation uneReservation = new Reservation(idReservation, unMateriel, id, duree, dateHeureDebut, dateHeureFin);
+				lesReservations.add(uneReservation);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return lesReservations;
 	}
 	
 }
