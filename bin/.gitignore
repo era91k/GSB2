@@ -1,2 +1,32 @@
+<<<<<<< HEAD
 /Reservation.class
 /V_MenuVisiteur$ActionReserverVoiture.class
+=======
+/Catalogue.class
+/DateLabelFormatter.class
+/Main.class
+/Materiel.class
+/Modele.class
+/Objet.class
+/Type_Vehicule.class
+/Utilisateur.class
+/V_AjoutMat.class
+/V_Connexion.class
+/V_DetailObjet.class
+/V_MenuResponsable$ActionAjoutMat.class
+/V_MenuResponsable$ActionDeconnexion.class
+/V_MenuResponsable$ActionQuitter.class
+/V_MenuResponsable$ActionSupptMat.class
+/V_MenuResponsable.class
+/V_MenuVisiteur$ActionDeconnexion.class
+/V_MenuVisiteur$ActionQuitter.class
+/V_MenuVisiteur$ActionReserverObjet.class
+/V_MenuVisiteur$ActionVoirReservations.class
+/V_MenuVisiteur.class
+/V_ReserverMateriel$ActionValider.class
+/V_ReserverMateriel$ActionVoirDetails.class
+/V_ReserverMateriel.class
+/V_SuppMat.class
+/Vehicule.class
+/V_AjoutMat$ActionValider.class
+>>>>>>> branch 'master' of https://github.com/era91k/GSB2.git
