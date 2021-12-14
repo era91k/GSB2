@@ -427,5 +427,41 @@ public class Modele {
 		}
 		return lesReservations;
 	}
+	/**
+	 * Supprimer une reservation a partir de l'id reservation
+	 * @param idReservation
+	 * @return boolean rep
+	 */
+	public static boolean supprimerReservation(int idReservation) {
+		boolean rep = false;
+		try {
+			Modele.connexionBDD();
+			String sql = "DELETE FROM Reservation WHERE idReservation = ?;";
+			pst = connexion.prepareStatement(sql);
+			pst.setInt(1, idReservation);
+			int ins = pst.executeUpdate();
+			if(ins == 1) {
+				rep = true;
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println("Erreur dans la requête supprimerReservation");
+		}
+		return rep;
+	}
+	
+	public static ResultSet majTabSupp(int idUser) {
+		rs = null;
+		try {
+			String sql = "SELECT reservation.idReservation, objet.nom, reservation.duree, reservation.dateHeureDebut, reservation.dateHeureFin FROM reservation, objet WHERE reservation.idUtilisateur = ? AND reservation.idObjet = objet.idObjet GROUP BY reservation.idReservation;";
+			pst = connexion.prepareStatement(sql);
+			pst.setInt(1, idUser);
+			rs = pst.executeQuery();
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println("erreur dans la fonction majTabSupp");
+		}
+		return rs;
+	}
 	
 }
