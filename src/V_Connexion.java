@@ -62,10 +62,10 @@ public class V_Connexion extends JFrame implements ActionListener {
         this.btnValider.setBounds(150,250,100,30);
         
         //Image
-        this.img = new ImageIcon(getClass().getResource("logo.jpg"));
+        /*this.img = new ImageIcon(getClass().getResource("logo.jpg"));
         this.image = new JLabel();
         this.image.setIcon(img);
-        this.image.setBounds(100,300,200,200);
+        this.image.setBounds(100,300,200,200);*/
         
         
         //Ajouter les composants au panel
@@ -75,7 +75,7 @@ public class V_Connexion extends JFrame implements ActionListener {
         monPanel.add(this.lblMdp);
         monPanel.add(this.jpfMdp);
         monPanel.add(this.btnValider);
-        monPanel.add(this.image);
+        //monPanel.add(this.image);
         
         this.setAlwaysOnTop(true);
         this.getContentPane().add(monPanel);
