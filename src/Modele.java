@@ -143,7 +143,7 @@ public class Modele {
 		try {
 			Modele.connexionBDD();
 			st = connexion.createStatement();
-			String sql = "SELECT * FROM Objet, Vehicule, TypeVehicule WHERE Objet.idObjet = Vehicule.idVehicule";
+			String sql = "SELECT * FROM Objet, Vehicule, TypeVehicule WHERE Objet.idObjet = Vehicule.idVehicule GROUP BY idObjet;";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {
 				int id = rs.getInt(1);
