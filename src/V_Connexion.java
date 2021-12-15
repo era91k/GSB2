@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.Hashtable;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -60,9 +61,14 @@ public class V_Connexion extends JFrame implements ActionListener {
         this.jpfMdp.setBounds(170,165,150,30);
         this.btnValider.setBounds(150,250,100,30);
         
+<<<<<<< HEAD
         //Image
         this.img = new ImageIcon("file:///Users/mac/eclipse-workspace/GSB2/logo.jpg");
         //this.img = new ImageIcon(getClass().getResource("images/logo.jpg"));
+=======
+        //Image
+        //this.img = new ImageIcon(getClass().getResource("logo.jpg"));
+>>>>>>> branch 'master' of https://github.com/era91k/GSB2.git
         this.image = new JLabel();
         this.image.setIcon(img);
         this.image.setBounds(100,300,200,200);
@@ -90,10 +96,12 @@ public class V_Connexion extends JFrame implements ActionListener {
 			String leMdp = new String(unMdp);
 			if(Modele.connexion(unLogin, leMdp)) {
 				//L'utilisateur existe
-				String role = Modele.verifRole(unLogin, leMdp);
+				Hashtable<String, String> ht = Modele.verifRole(unLogin, leMdp);
+				String role = ht.get("role");
+				int id = Modele.recupInt(ht.get("id"));
 				switch(role) {//On vérifie son rôle
 					case "visiteur" :
-						V_MenuVisiteur fenVisit = new V_MenuVisiteur();
+						V_MenuVisiteur fenVisit = new V_MenuVisiteur(id);
 						dispose();
 						break;
 					case "responsable" :

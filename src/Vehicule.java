@@ -1,7 +1,7 @@
 public class Vehicule extends Objet{
 
 	//Attributs privés
-	private int idTypeV;
+	private Type_Vehicule typeVehicule;
 	private String immat;
 	private String modele;
 	private String marque;
@@ -18,9 +18,9 @@ public class Vehicule extends Objet{
 	 * @param uneMarque
 	 * @param unNbPlace
 	 */
-	public Vehicule(int unIdObjet, String unNomObjet, int unNbReservation, int unIdTypeV , String unImmat, String unModele, String uneMarque, int unNbPlace) {
+	public Vehicule(int unIdObjet, String unNomObjet, int unNbReservation, Type_Vehicule unTypeV , String unImmat, String unModele, String uneMarque, int unNbPlace) {
 		super(unIdObjet, unNomObjet, unNbReservation);
-		this.idTypeV = unIdTypeV;
+		this.typeVehicule = unTypeV;
 		this.immat = unImmat;
 		this.modele = unModele;
 		this.marque = uneMarque;
@@ -28,12 +28,12 @@ public class Vehicule extends Objet{
 	}
 
 	//Accesseurs
-	public int getIdTypeV() {
-		return this.idTypeV;
+	public Type_Vehicule getIdTypeV() {
+		return this.typeVehicule;
 	}
 
-	public void setIdTypeV(int unIdTypeV) {
-		this.idTypeV = unIdTypeV;
+	public void setIdTypeV(Type_Vehicule unIdTypeV) {
+		this.typeVehicule = unIdTypeV;
 	}
 
 	public String getImmat() {
@@ -75,6 +75,6 @@ public class Vehicule extends Objet{
 		int id = super.getIdObjet();
 		String nom = super.getNomObjet();
 		int nb = super.getNbReservations();
-		return id + " - " + nom + " - " + nb + " - " + this.idTypeV + " - " + this.immat + " - " + this.modele + " - " + this.marque + " - " + this.nbPlaces;
+		return id + " - " + nom + " - " + nb + " - " + this.typeVehicule.getLibelle() + " - " + this.immat + " - " + this.modele + " - " + this.marque + " - " + this.nbPlaces;
 	}
 }

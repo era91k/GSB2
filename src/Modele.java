@@ -4,8 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-
+import java.util.Hashtable;
 public class Modele {
 
 	private static Connection connexion;
@@ -20,8 +21,14 @@ public class Modele {
 	 */
 	public static void connexionBDD() {
 		try {
+<<<<<<< HEAD
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connexion = DriverManager.getConnection("jdbc:mysql://localhost:8889/gsb2?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "root", "root");
+=======
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			connexion = DriverManager.getConnection("jdbc:mysql://172.16.203.217/gsb2?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "sio", "slam");
+
+>>>>>>> branch 'master' of https://github.com/era91k/GSB2.git
 			st = connexion.createStatement();
 		} 
 		catch (ClassNotFoundException erreur ) {
@@ -81,23 +88,28 @@ public class Modele {
 	 * @param String unMdp
 	 * @return String unRole
 	 */
-	public static String verifRole(String unLogin, String unMdp) {
+	public static Hashtable<String, String> verifRole(String unLogin, String unMdp) {
 		String unRole = "";
+		int unId;
+		Hashtable<String, String> ht = new Hashtable<String, String>();
 		try {
 			Modele.connexionBDD();
-			String sql = "SELECT role FROM Utilisateur WHERE login = ? AND mdp = sha1(?);";
+			String sql = "SELECT id, role FROM Utilisateur WHERE login = ? AND mdp = sha1(?);";
 			pst = connexion.prepareStatement(sql);
 			pst.setString(1, unLogin);
 			pst.setString(2, unMdp);
 			rs = pst.executeQuery();
 			while(rs.next()) {
-				unRole = rs.getString(1);
+				unId = rs.getInt(1);
+				unRole = rs.getString(2);
+				ht.put("id", Integer.toString(unId));
+				ht.put("role", unRole);
 			}
 		}catch(SQLException e) {
 			System.out.println("Erreur dans la fonction verifRole");
 			e.printStackTrace();
 		}
-		return unRole;
+		return ht;
 	}
 	
 	/**
@@ -137,18 +149,20 @@ public class Modele {
 		try {
 			Modele.connexionBDD();
 			st = connexion.createStatement();
-			String sql = "SELECT Objet.idObjet, Objet.nom, Objet.nbReservation, Vehicule.idTypeV, Vehicule.immat, Vehicule.modele, Vehicule.marque, Vehicule.nbPlaces FROM Objet, Vehicule WHERE Objet.idObjet = Vehicule.idVehicule;";
+			String sql = "SELECT * FROM Objet, Vehicule, TypeVehicule WHERE Objet.idObjet = Vehicule.idVehicule GROUP BY idObjet;";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {
 				int id = rs.getInt(1);
 				String nom = rs.getString(2);
 				int nbReserv = rs.getInt(3);
-				int idTypeV = rs.getInt(4);
-				String immat = rs.getString(5);
-				String modele = rs.getString(6);
-				String marque = rs.getString(7);
-				int nbPlaces = rs.getInt(8);
-				Vehicule unVehicule = new Vehicule(id,nom,nbReserv,idTypeV,immat,modele,marque,nbPlaces);
+				int idTypeV = rs.getInt(5);
+				String immat = rs.getString(6);
+				String modele = rs.getString(7);
+				String marque = rs.getString(8);
+				int nbPlaces = rs.getInt(9);
+				String libelle = rs.getString(11);
+				Type_Vehicule unType = new Type_Vehicule(idTypeV,libelle);
+				Vehicule unVehicule = new Vehicule(id,nom,nbReserv,unType,immat,modele,marque,nbPlaces);
 				lesVehicules.add(unVehicule);
 			}
 		}catch(SQLException e) {
@@ -234,7 +248,11 @@ public class Modele {
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * Méthode récupérant l'id d'un objet de type Materiel
+=======
+	 * Méthode r�cup�rant l'id d'un Objet de type Materiel
+>>>>>>> branch 'master' of https://github.com/era91k/GSB2.git
 	 * @param id
 	 * @return
 	 */
@@ -261,9 +279,41 @@ public class Modele {
 		}
 		return unMateriel;
 	}
+	/**
+	 * Recuperer un Vehicule a partir de son id
+	 * @param id
+	 * @return
+	 */
+	public static Vehicule getVehiculeById(int id) {
+		Vehicule unVehicule = null;
+		try {
+			Modele.connexionBDD();
+			String sql = "SELECT * FROM Objet, Vehicule, TypeVehicule WHERE Objet.idObjet = Vehicule.idVehicule AND Objet.idObjet = ?;";
+			pst = connexion.prepareStatement(sql);
+			pst.setInt(1, id);
+			rs = pst.executeQuery();
+			while(rs.next()) {
+				int unId = rs.getInt(1);
+				String nom = rs.getString(2);
+				int nbReserv = rs.getInt(3);
+				int idTypeV = rs.getInt(5);
+				String immat = rs.getString(6);
+				String modele = rs.getString(7);
+				String marque = rs.getString(8);
+				int nbPlaces = rs.getInt(9);
+				String libelle = rs.getString(11);
+				Type_Vehicule unType = new Type_Vehicule(idTypeV,libelle);
+				unVehicule = new Vehicule(unId,nom,nbReserv,unType,immat,modele,marque,nbPlaces);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println("Erreur dans la fonction getVehiculeById");
+		}
+		return unVehicule;
+	}
 	
 	/**
-	 * Méthode récupérant uniquement l'id d'un objet
+	 * Méthode récupérant uniquement l'id d'un Objet
 	 * @param uneChaine
 	 * @return
 	 */
@@ -272,4 +322,141 @@ public class Modele {
 		int leInt = Integer.parseInt(val);
 		return leInt;
 	}
+
+	/**Ajouter un Materiel
+	 * @param idObjet
+	 * @param idUser
+	 * @param dateDebut
+	 * @param dateFin
+	 * @return
+	 */
+	public static boolean ajouterReservation(int idObjet, int idUser, String dateDebut, String dateFin) {
+		boolean rep = false;
+		try {
+			Modele.connexionBDD();
+			String sql = "INSERT INTO Reservation(idObjet, idUtilisateur, dateHeureDebut, dateHeureFin) VALUES (?,?,?,?);";
+			pst = connexion.prepareStatement(sql);
+			pst.setInt(1, idObjet);
+			pst.setInt(2, idUser);
+			pst.setString(3, dateDebut);
+			pst.setString(4, dateFin);
+			int ins = pst.executeUpdate();
+			if(ins == 1) {
+				rep = true;
+			}
+			rs.close();
+		}catch(SQLException e) {
+			System.out.println("Erreur dans la fonction ajouterReservation");
+			e.printStackTrace();
+		}
+		return rep;
+	}
+	
+	/**
+	 * Methode de suppression d'Objet de la bdd
+	 * @param unId
+	 * @return
+	 */
+	public static boolean supprimerMat (int unId) {
+		Modele.connexionBDD();
+		String requete;
+		String req;
+		int ins;
+		int ins2;
+		boolean rep = false;
+		try {
+			requete = "DELETE FROM Objet WHERE idObjet = ?";
+			ins = st.executeUpdate(requete);
+			req = "DELETE FROM Materiel WHERE idMat = ?";
+			ins2 = st.executeUpdate(req);
+			if (ins == 1 && ins2 == 1) {
+				rep = true;
+			}
+		} 
+		catch (SQLException erreur) {
+			erreur.printStackTrace();
+		}
+		return rep;
+	}
+	/**
+	 * Recupere toutes les Reservations d'un visiteur a partir de son id et retourne une collection de Reservations
+	 * @param id
+	 * @return
+	 */
+	public static ArrayList<Reservation> getReservation(int id){
+		ArrayList<Reservation> lesReservations = new ArrayList<Reservation>();
+		try {//On recupere d'abord les Reservations de v�hicule
+			String sql = "SELECT Reservation.idReservation, Reservation.idObjet, Reservation.duree, Reservation.dateHeureDebut, Reservation.dateHeureFin, Vehicule.idTypeV, Vehicule.immat, Vehicule.modele, Vehicule.marque, Vehicule.nbPlaces, TypeVehicule.libelle, Objet.nom, Objet.nbReservation FROM Reservation, Vehicule, TypeVehicule, Objet WHERE Reservation.idUtilisateur = ? AND Reservation.idObjet = Vehicule.idVehicule AND Vehicule.idVehicule = Objet.idObjet AND Vehicule.idTypeV = TypeVehicule.idTypeV AND Reservation.idObjet IN (SELECT Vehicule.idVehicule FROM Vehicule) GROUP BY Reservation.idReservation";
+			pst = connexion.prepareStatement(sql);
+			pst.setInt(1, id);
+			rs = pst.executeQuery();
+			while(rs.next()) {
+				int idVehicule = rs.getInt("idObjet");
+				int idTypeV = rs.getInt("idTypeV");
+				String nom = rs.getString("nom");
+				String immat = rs.getString("immat");
+				String modele = rs.getString("modele");
+				String marque = rs.getString("marque");
+				int nbPlaces = rs.getInt("nbPlaces");
+				String libelle = rs.getString("libelle");
+				int idReserv = rs.getInt("idReservation");
+				int duree = rs.getInt("duree");
+				int nbReserv = rs.getInt("nbReservation");
+				Timestamp dateHeureDebut = rs.getTimestamp("dateHeureDebut");
+				Timestamp dateHeureFin = rs.getTimestamp("dateHeureFin");
+				Type_Vehicule unType = new Type_Vehicule(idTypeV, libelle);
+				Vehicule unVehicule = new Vehicule(idVehicule, nom, nbReserv, unType, immat, modele, marque, nbPlaces);
+				Reservation uneReservation = new Reservation(idReserv, unVehicule, id, duree, dateHeureDebut, dateHeureFin);
+				lesReservations.add(uneReservation);	
+			}
+			//On recupere ensuite les Reservations de Materiel
+			String sql2 = "SELECT Reservation.idReservation, Reservation.idObjet, Reservation.duree, Reservation.dateHeureDebut, Reservation.dateHeureFin, Materiel.idMat, Materiel.largeur, Materiel.longueur, Materiel.typeMat, Objet.nom, Objet.nbReservation FROM Reservation, Materiel, Objet WHERE Reservation.idObjet = Materiel.idMat AND Materiel.idMat = Objet.idObjet AND Reservation.idUtilisateur = ? AND Reservation.idObjet IN (SELECT Materiel.idMat FROM Materiel) GROUP BY Reservation.idReservation;";
+			pst = connexion.prepareStatement(sql2);
+			pst.setInt(1, id);
+			rs = pst.executeQuery();
+			while(rs.next()) {
+				int idMat = rs.getInt("idObjet");
+				String nom = rs.getString("nom");
+				int nbReserv = rs.getInt("nbReservation");
+				double largeur = rs.getDouble("largeur");
+				double longueur = rs.getDouble("longueur");
+				String typeMat = rs.getString("typeMat");
+				Materiel unMateriel = new Materiel(idMat, nom, nbReserv, largeur, longueur, typeMat);
+				int idReservation = rs.getInt("idReservation");
+				int duree = rs.getInt("duree");
+				Timestamp dateHeureDebut = rs.getTimestamp("dateHeureDebut");
+				Timestamp dateHeureFin = rs.getTimestamp("dateHeureFin");
+				Reservation uneReservation = new Reservation(idReservation, unMateriel, id, duree, dateHeureDebut, dateHeureFin);
+				lesReservations.add(uneReservation);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return lesReservations;
+	}
+	/**
+	 * Supprimer une Reservation a partir de l'id Reservation
+	 * @param idReservation
+	 * @return boolean rep
+	 */
+	public static boolean supprimerReservation(int idReservation) {
+		boolean rep = false;
+		try {
+			Modele.connexionBDD();
+			String sql = "DELETE FROM Reservation WHERE idReservation = ?;";
+			pst = connexion.prepareStatement(sql);
+			pst.setInt(1, idReservation);
+			int ins = pst.executeUpdate();
+			if(ins == 1) {
+				rep = true;
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println("Erreur dans la requ�te supprimerReservation");
+		}
+		return rep;
+	}
+	
 }

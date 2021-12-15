@@ -37,9 +37,9 @@ public class V_MenuResponsable extends JFrame implements ActionListener {
         this.menu.setBorder(BorderFactory.createLineBorder(new Color(47, 53, 66)));
         
         //Partie Gestion des Courses
-        this.menuReservation = new JMenu("MatÃ©riel");
-        this.ajoutMat = new JMenuItem("Ajouter un matÃ©riel");
-        this.suppMat = new JMenuItem("Supprimer un matÃ©riel");
+        this.menuReservation = new JMenu("Matériel");
+        this.ajoutMat = new JMenuItem("Ajouter un matériel");
+        this.suppMat = new JMenuItem("Supprimer un matériel");
         this.ajoutMat.addActionListener(new ActionAjoutMat());
         this.suppMat.addActionListener(new ActionSupptMat());
         this.menuReservation.add(ajoutMat);
@@ -47,8 +47,8 @@ public class V_MenuResponsable extends JFrame implements ActionListener {
         this.menu.add(menuReservation);
         
         //Partie Gestion des ï¿½curies
-        this.menuDeconnexion = new JMenu("DÃ©connexion");
-        this.seDeconnect = new JMenuItem("Se dÃ©connecter");
+        this.menuDeconnexion = new JMenu("Déconnexion");
+        this.seDeconnect = new JMenuItem("Se dé©connecter");
         this.quitter = new JMenuItem("Quitter");
         this.seDeconnect.addActionListener(new ActionDeconnexion());
         this.quitter.addActionListener(new ActionQuitter());
