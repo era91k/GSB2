@@ -62,7 +62,7 @@ public class V_Connexion extends JFrame implements ActionListener {
         this.btnValider.setBounds(150,250,100,30);
         
         //Image
-        this.img = new ImageIcon(getClass().getResource("logo.jpg"));
+        //this.img = new ImageIcon(getClass().getResource("logo.jpg"));
         this.image = new JLabel();
         this.image.setIcon(img);
         this.image.setBounds(100,300,200,200);
