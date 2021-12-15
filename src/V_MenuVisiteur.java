@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 public class V_MenuVisiteur extends JFrame implements ActionListener {
-	//Attributs privés
+	//Attributs privï¿½s
 	private JPanel monPanel;
 	private JMenuBar menu;
 	private JMenu menuReservation;
@@ -17,15 +17,15 @@ public class V_MenuVisiteur extends JFrame implements ActionListener {
 	public V_MenuVisiteur() {
 		//Titre
         this.setTitle("Bienvenu(e) dans GSB2"); 
-        //Localisation de la fenêtre (null = milieu)
+        //Localisation de la fenï¿½tre (null = milieu)
         this.setLocationRelativeTo(null);
-        //Arrêt du programme quand la croix "fermer" est cliquée
+        //Arrï¿½t du programme quand la croix "fermer" est cliquï¿½e
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //Taille de la fenêtre
+        //Taille de la fenï¿½tre
         this.setSize(700, 500);
         this.setResizable(false); //<---Redimension de la fenetre impossible
         
-        //Initialisation et paramétrage des panels
+        //Initialisation et paramï¿½trage des panels
         this.monPanel = new JPanel();
         this.monPanel.setLayout(null);
         this.monPanel.setBackground(new Color(48, 51, 107));
@@ -46,9 +46,9 @@ public class V_MenuVisiteur extends JFrame implements ActionListener {
         this.menuReservation.add(voirReservations);
         this.menu.add(menuReservation);
         
-        //Partie Gestion des écuries
+        //Partie Gestion des ï¿½curies
         this.menuDeconnexion = new JMenu("Deconnexion");
-        this.seDeconnect = new JMenuItem("Se déconnecter");
+        this.seDeconnect = new JMenuItem("Se deconnecter");
         this.quitter = new JMenuItem("Quitter");
         this.seDeconnect.addActionListener(new ActionDeconnexion());
         this.quitter.addActionListener(new ActionQuitter());

@@ -61,11 +61,8 @@ public class V_Connexion extends JFrame implements ActionListener {
         this.btnValider.setBounds(150,250,100,30);
         
         //Image
-<<<<<<< HEAD
         this.img = new ImageIcon("file:///Users/mac/eclipse-workspace/GSB2/logo.jpg");
-=======
-        this.img = new ImageIcon(getClass().getResource("images/logo.jpg"));
->>>>>>> branch 'master' of https://github.com/era91k/GSB2.git
+        //this.img = new ImageIcon(getClass().getResource("images/logo.jpg"));
         this.image = new JLabel();
         this.image.setIcon(img);
         this.image.setBounds(100,300,200,200);
@@ -101,9 +98,11 @@ public class V_Connexion extends JFrame implements ActionListener {
 						break;
 					case "responsable" :
 						V_MenuResponsable fenResp = new V_MenuResponsable();
+						JOptionPane.showMessageDialog(this, "Connexion reussie - Responsable");
 						dispose();
 						break;
 					case "directeur" :
+						V_MenuDirecteur fenDir = new V_MenuDirecteur();
 						JOptionPane.showMessageDialog(this, "Connexion reussie - Directeur");
 						break;
 				}
