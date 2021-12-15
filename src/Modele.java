@@ -22,7 +22,7 @@ public class Modele {
 	public static void connexionBDD() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connexion = DriverManager.getConnection("jdbc:mysql://localhost/gsb2?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "root", "");
+			connexion = DriverManager.getConnection("jdbc:mysql://172.16.203.218/gsb2?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "sio", "slam");
 
 			st = connexion.createStatement();
 		} 
@@ -243,7 +243,7 @@ public class Modele {
 	}
 	
 	/**
-	 * Méthode r�cup�rant l'id d'un objet de type Materiel
+	 * Méthode r�cup�rant l'id d'un Objet de type Materiel
 	 * @param id
 	 * @return
 	 */
@@ -271,7 +271,7 @@ public class Modele {
 		return unMateriel;
 	}
 	/**
-	 * Recuperer un vehicule a partir de son id
+	 * Recuperer un Vehicule a partir de son id
 	 * @param id
 	 * @return
 	 */
@@ -304,7 +304,7 @@ public class Modele {
 	}
 	
 	/**
-	 * Méthode récupérant uniquement l'id d'un objet
+	 * Méthode récupérant uniquement l'id d'un Objet
 	 * @param uneChaine
 	 * @return
 	 */
@@ -314,7 +314,7 @@ public class Modele {
 		return leInt;
 	}
 
-	/**Ajouter un materiel
+	/**Ajouter un Materiel
 	 * @param idObjet
 	 * @param idUser
 	 * @param dateDebut
@@ -344,7 +344,7 @@ public class Modele {
 	}
 	
 	/**
-	 * Methode de suppression d'objet de la bdd
+	 * Methode de suppression d'Objet de la bdd
 	 * @param unId
 	 * @return
 	 */
@@ -370,14 +370,14 @@ public class Modele {
 		return rep;
 	}
 	/**
-	 * Recupere toutes les reservations d'un visiteur a partir de son id et retourne une collection de reservations
+	 * Recupere toutes les Reservations d'un visiteur a partir de son id et retourne une collection de Reservations
 	 * @param id
 	 * @return
 	 */
 	public static ArrayList<Reservation> getReservation(int id){
 		ArrayList<Reservation> lesReservations = new ArrayList<Reservation>();
-		try {//On recupere d'abord les reservations de v�hicule
-			String sql = "SELECT reservation.idReservation, reservation.idObjet, reservation.duree, reservation.dateHeureDebut, reservation.dateHeureFin, vehicule.idTypeV, vehicule.immat, vehicule.modele, vehicule.marque, vehicule.nbPlaces, typevehicule.libelle, objet.nom, objet.nbReservation FROM reservation, vehicule, typevehicule, objet WHERE reservation.idUtilisateur = ? AND reservation.idObjet = vehicule.idVehicule AND vehicule.idVehicule = objet.idObjet AND vehicule.idTypeV = typevehicule.idTypeV AND reservation.idObjet IN (SELECT vehicule.idVehicule FROM vehicule) GROUP BY reservation.idReservation";
+		try {//On recupere d'abord les Reservations de v�hicule
+			String sql = "SELECT Reservation.idReservation, Reservation.idObjet, Reservation.duree, Reservation.dateHeureDebut, Reservation.dateHeureFin, Vehicule.idTypeV, Vehicule.immat, Vehicule.modele, Vehicule.marque, Vehicule.nbPlaces, TypeVehicule.libelle, Objet.nom, Objet.nbReservation FROM Reservation, Vehicule, TypeVehicule, Objet WHERE Reservation.idUtilisateur = ? AND Reservation.idObjet = Vehicule.idVehicule AND Vehicule.idVehicule = Objet.idObjet AND Vehicule.idTypeV = TypeVehicule.idTypeV AND Reservation.idObjet IN (SELECT Vehicule.idVehicule FROM Vehicule) GROUP BY Reservation.idReservation";
 			pst = connexion.prepareStatement(sql);
 			pst.setInt(1, id);
 			rs = pst.executeQuery();
@@ -400,8 +400,8 @@ public class Modele {
 				Reservation uneReservation = new Reservation(idReserv, unVehicule, id, duree, dateHeureDebut, dateHeureFin);
 				lesReservations.add(uneReservation);	
 			}
-			//On recupere ensuite les reservations de materiel
-			String sql2 = "SELECT reservation.idReservation, reservation.idObjet, reservation.duree, reservation.dateHeureDebut, reservation.dateHeureFin, materiel.idMat, materiel.largeur, materiel.longueur, materiel.typeMat, objet.nom, objet.nbReservation FROM reservation, materiel, objet WHERE reservation.idObjet = materiel.idMat AND materiel.idMat = objet.idObjet AND reservation.idUtilisateur = ? AND reservation.idObjet IN (SELECT materiel.idMat FROM materiel) GROUP BY reservation.idReservation;";
+			//On recupere ensuite les Reservations de Materiel
+			String sql2 = "SELECT Reservation.idReservation, Reservation.idObjet, Reservation.duree, Reservation.dateHeureDebut, Reservation.dateHeureFin, Materiel.idMat, Materiel.largeur, Materiel.longueur, Materiel.typeMat, Objet.nom, Objet.nbReservation FROM Reservation, Materiel, Objet WHERE Reservation.idObjet = Materiel.idMat AND Materiel.idMat = Objet.idObjet AND Reservation.idUtilisateur = ? AND Reservation.idObjet IN (SELECT Materiel.idMat FROM Materiel) GROUP BY Reservation.idReservation;";
 			pst = connexion.prepareStatement(sql2);
 			pst.setInt(1, id);
 			rs = pst.executeQuery();
@@ -428,7 +428,7 @@ public class Modele {
 		return lesReservations;
 	}
 	/**
-	 * Supprimer une reservation a partir de l'id reservation
+	 * Supprimer une Reservation a partir de l'id Reservation
 	 * @param idReservation
 	 * @return boolean rep
 	 */
@@ -448,20 +448,6 @@ public class Modele {
 			System.out.println("Erreur dans la requ�te supprimerReservation");
 		}
 		return rep;
-	}
-	
-	public static ResultSet majTabSupp(int idUser) {
-		rs = null;
-		try {
-			String sql = "SELECT reservation.idReservation, objet.nom, reservation.duree, reservation.dateHeureDebut, reservation.dateHeureFin FROM reservation, objet WHERE reservation.idUtilisateur = ? AND reservation.idObjet = objet.idObjet GROUP BY reservation.idReservation;";
-			pst = connexion.prepareStatement(sql);
-			pst.setInt(1, idUser);
-			rs = pst.executeQuery();
-		}catch(SQLException e) {
-			e.printStackTrace();
-			System.out.println("erreur dans la fonction majTabSupp");
-		}
-		return rs;
 	}
 	
 }

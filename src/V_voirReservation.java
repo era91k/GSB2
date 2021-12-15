@@ -1,21 +1,30 @@
 import java.awt.*;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSetMetaData;
 public class V_voirReservation extends JPanel implements ActionListener{
 	//Attributs privés
+	private JPanel monPanel;
 	private JLabel lblTitre;
 	private JButton btnSupprimer;
 	private JButton voirDetails;
 	private JTable tableau;
 	private JScrollPane scrollPane;
 	private int idVisiteur;
+	private DefaultTableModel tabModel;
 	
 	public V_voirReservation(ArrayList<Reservation> lesReservations, int idUser) {
-		this.setPreferredSize(new Dimension(700,500));
 		this.setBackground(new Color(48, 51, 107));
+		this.monPanel = new JPanel();
+		this.monPanel.setPreferredSize(new Dimension(700,500));
+		this.monPanel.setBackground(new Color(48, 51, 107));
 		
 		//IdVisiteur
 		this.idVisiteur = idUser;
@@ -30,7 +39,7 @@ public class V_voirReservation extends JPanel implements ActionListener{
 		this.btnSupprimer.setForeground(Color.white);
 		this.btnSupprimer.setBackground(new Color(104,109,224));
 		this.btnSupprimer.setPreferredSize(new Dimension(100,30));
-		this.btnSupprimer.addActionListener(new ActionSupprimer());
+		this.btnSupprimer.addActionListener(this);
 		
 		this.voirDetails = new JButton("Voir détails");
 		this.voirDetails.setForeground(Color.white);
@@ -55,21 +64,35 @@ public class V_voirReservation extends JPanel implements ActionListener{
 		this.tableau.setRowHeight(30);
 		this.scrollPane = new JScrollPane(this.tableau);
 		
-		this.add(this.lblTitre);
-		this.add(this.voirDetails);
-		this.add(this.btnSupprimer);
-		this.add(this.scrollPane);
+		this.monPanel.add(this.lblTitre);
+		this.monPanel.add(this.voirDetails);
+		this.monPanel.add(this.btnSupprimer);
+		this.monPanel.add(this.scrollPane);
+		this.add(this.monPanel);
 		this.setVisible(true);
 	}
 	
-	class ActionSupprimer implements ActionListener{
-		public void actionPerformed(ActionEvent e) {
-			int ligne = V_voirReservation.this.tableau.getSelectedRow();
+	private JPanel getMonPanel() {
+		return this.monPanel;
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == this.btnSupprimer) {
+			int ligne = this.tableau.getSelectedRow();
 			if(ligne != -1) {
-				String idReservation = V_voirReservation.this.tableau.getModel().getValueAt(ligne, 0).toString();
+				String idReservation = this.tableau.getModel().getValueAt(ligne, 0).toString();
 				int idR = Modele.recupInt(idReservation);
 				if(Modele.supprimerReservation(idR)) {
 					System.out.println("Suppression réussie");
+					int idUser = this.idVisiteur;
+					ArrayList<Reservation> lesReservations = Modele.getReservation(idUser);
+					V_voirReservation maVue = new V_voirReservation(lesReservations, idUser);
+					JPanel unPanel = maVue.getMonPanel();
+					this.removeAll();
+					this.add(unPanel);
+					this.repaint();
+					this.revalidate();
+					
 				}else {
 					System.out.println("Suppression échouée");
 				}
@@ -79,9 +102,4 @@ public class V_voirReservation extends JPanel implements ActionListener{
 		}
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 }
