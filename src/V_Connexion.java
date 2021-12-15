@@ -103,7 +103,8 @@ public class V_Connexion extends JFrame implements ActionListener {
 						dispose();
 						break;
 					case "directeur" :
-						JOptionPane.showMessageDialog(this, "Connexion reussie - Directeur");
+						V_MenuDir fenDir = new V_MenuDir(id);
+						dispose();
 						break;
 				}
 			}

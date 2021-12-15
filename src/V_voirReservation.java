@@ -83,9 +83,9 @@ public class V_voirReservation extends JPanel implements ActionListener{
 					int idUser = this.idVisiteur;
 					ArrayList<Reservation> lesReservations = Modele.getReservation(idUser);
 					V_voirReservation maVue = new V_voirReservation(lesReservations, idUser);
-					JPanel unPanel = maVue.getMonPanel(); // Rafraichissement du tableau
+					maVue.setBorder(BorderFactory.createEmptyBorder(-5, 0, 0, 0));//On empeche que le panel descende
 					this.removeAll();
-					this.add(unPanel);
+					this.add(maVue);
 					this.repaint();
 					this.revalidate();
 					

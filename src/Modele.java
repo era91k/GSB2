@@ -22,7 +22,7 @@ public class Modele {
 	public static void connexionBDD() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connexion = DriverManager.getConnection("jdbc:mysql://172.16.203.217/gsb2?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "sio", "slam");
+			connexion = DriverManager.getConnection("jdbc:mysql://localhost/gsb2?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "root", "");
 
 			st = connexion.createStatement();
 		} 
@@ -448,6 +448,32 @@ public class Modele {
 			System.out.println("Erreur dans la requête supprimerReservation");
 		}
 		return rep;
+	}
+	/**
+	 * Recuperer toutes les statistiques des visiteurs
+	 * @return
+	 */
+	public static ArrayList<StatVisiteur> getStatVisiteur(){
+		ArrayList<StatVisiteur> lesStats = new ArrayList<StatVisiteur>();
+		try {
+			Modele.connexionBDD();
+			st = connexion.createStatement();
+			String sql = "SELECT idUtilisateur, nom, prenom, COUNT(idReservation) AS nbReservations, typeMat FROM Reservation, Materiel, Utilisateur WHERE Reservation.idObjet = Materiel.idMat AND Reservation.idUtilisateur = Utilisateur.id GROUP BY typeMat;";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {
+				int idUser = rs.getInt("idUtilisateur");
+				String nom = rs.getString("nom");
+				String prenom = rs.getString("prenom");
+				int nbReserv = rs.getInt("nbReservations");
+				String typeMat = rs.getString("typeMat");
+				StatVisiteur uneStat = new StatVisiteur(idUser, nom, prenom, nbReserv, typeMat);
+				lesStats.add(uneStat);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println("Erreur dans la requête getStatVisiteur");
+		}
+		return lesStats;
 	}
 	
 }
