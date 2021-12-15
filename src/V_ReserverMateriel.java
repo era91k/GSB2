@@ -52,16 +52,16 @@ public class V_ReserverMateriel extends JPanel implements ActionListener {
 		liste.setPreferredSize(new Dimension(150,30));
         
         //JLabel
-		this.lblMateriel = new JLabel("Choisir un matériel :");
+		this.lblMateriel = new JLabel("Choisir un matÃ©riel :");
 		this.lblMateriel.setForeground(Color.white);
-        this.lblDateDebut = new JLabel("Date début :");
+        this.lblDateDebut = new JLabel("Date dï¿½but :");
         this.lblDateDebut.setForeground(Color.white);
         this.lblDateFin = new JLabel("Date fin :");
         this.lblDateFin.setForeground(Color.white);
         this.lblNotif = new JLabel("");
         
         //JButton
-        this.btnDetails = new JButton("Voir les caractéristiques");
+        this.btnDetails = new JButton("Voir les caractÃ©ristiques");
 		this.btnDetails.setForeground(Color.white);
         this.btnDetails.setBackground(new Color(104, 109, 224));
         this.btnDetails.setPreferredSize(new Dimension(170,30));

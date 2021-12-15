@@ -23,7 +23,6 @@ public class Modele {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connexion = DriverManager.getConnection("jdbc:mysql://localhost/gsb2?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "root", "");
-
 			st = connexion.createStatement();
 		} 
 		catch (ClassNotFoundException erreur ) {
@@ -243,7 +242,11 @@ public class Modele {
 	}
 	
 	/**
+<<<<<<< HEAD
+	 * Méthode récupérant l'id d'un objet de type Materiel
+=======
 	 * Méthode r�cup�rant l'id d'un Objet de type Materiel
+>>>>>>> branch 'master' of https://github.com/era91k/GSB2.git
 	 * @param id
 	 * @return
 	 */
