@@ -2,7 +2,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.Assert.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import junit.framework.Assert;
 
 class ModeleTest {
@@ -21,6 +20,11 @@ class ModeleTest {
 	
 	@Test
 	void testAjoutMat() {
+		int unIdObjet = 12;
+		String unNomObjet = "Chaise en bois"; 
+		double uneLargeur = 12.5;
+		double uneLongueur = 16;
+		String unType = "Meuble";
 		
 	}
 
