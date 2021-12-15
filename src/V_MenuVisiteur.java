@@ -52,11 +52,7 @@ public class V_MenuVisiteur extends JFrame implements ActionListener {
         this.menuReservation.add(voirReservations);
         this.menu.add(menuReservation);
         
-<<<<<<< HEAD
-        //Partie Gestion des �curies
-=======
         //Partie deconnexion
->>>>>>> branch 'master' of https://github.com/era91k/GSB2.git
         this.menuDeconnexion = new JMenu("Deconnexion");
         this.seDeconnect = new JMenuItem("Se deconnecter");
         this.quitter = new JMenuItem("Quitter");
