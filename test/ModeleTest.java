@@ -10,7 +10,7 @@ class ModeleTest {
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		unMat.ajouterMat(12,"Chaise en bois", 12.5 , 16 , "Meuble");
+		
 	}
 
 	@Test
@@ -25,6 +25,7 @@ class ModeleTest {
 		double uneLargeur = 12.5;
 		double uneLongueur = 16;
 		String unType = "Meuble";
+		Assert.assertTrue("L'objet n'a pas été ajouté !",unMat.ajouterMat(unIdObjet,unNomObjet,uneLargeur,uneLongueur,unType));
 		
 	}
 
