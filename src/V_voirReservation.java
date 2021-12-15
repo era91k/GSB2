@@ -13,11 +13,12 @@ public class V_voirReservation extends JPanel implements ActionListener{
 	//Attributs privés
 	private JPanel monPanel;
 	private JLabel lblTitre;
-	private JLabel lblNotif;
 	private JButton btnSupprimer;
+	private JButton voirDetails;
 	private JTable tableau;
 	private JScrollPane scrollPane;
 	private int idVisiteur;
+	private DefaultTableModel tabModel;
 	
 	public V_voirReservation(ArrayList<Reservation> lesReservations, int idUser) {
 		this.setBackground(new Color(48, 51, 107));
@@ -27,14 +28,11 @@ public class V_voirReservation extends JPanel implements ActionListener{
 		
 		//IdVisiteur
 		this.idVisiteur = idUser;
-		
 		//Labels
 		this.lblTitre = new JLabel("Mes réservations");
 		this.lblTitre.setForeground(Color.white);
 		this.lblTitre.setFont(new Font("Verdana", Font.PLAIN, 30));
 		this.lblTitre.setBorder(new EmptyBorder(20,0,30,130));
-		
-		this.lblNotif = new JLabel("");
 		
 		//Boutons
 		this.btnSupprimer = new JButton("Supprimer");
@@ -42,6 +40,11 @@ public class V_voirReservation extends JPanel implements ActionListener{
 		this.btnSupprimer.setBackground(new Color(104,109,224));
 		this.btnSupprimer.setPreferredSize(new Dimension(100,30));
 		this.btnSupprimer.addActionListener(this);
+		
+		this.voirDetails = new JButton("Voir détails");
+		this.voirDetails.setForeground(Color.white);
+		this.voirDetails.setBackground(new Color(104,109,224));
+		this.voirDetails.setPreferredSize(new Dimension(100,30));
 		
 		//Tableau
 		String[] entetes = {"Reservation", "Objet reservé", "Duree", "Date début", "Date Fin"};
@@ -61,8 +64,8 @@ public class V_voirReservation extends JPanel implements ActionListener{
 		this.tableau.setRowHeight(30);
 		this.scrollPane = new JScrollPane(this.tableau);
 		
-		//Ajout des panels
 		this.monPanel.add(this.lblTitre);
+		this.monPanel.add(this.voirDetails);
 		this.monPanel.add(this.btnSupprimer);
 		this.monPanel.add(this.scrollPane);
 		this.add(this.monPanel);
@@ -74,26 +77,27 @@ public class V_voirReservation extends JPanel implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == this.btnSupprimer) {//Si on appuie sur le bouton supprimer
+		if(e.getSource() == this.btnSupprimer) {
 			int ligne = this.tableau.getSelectedRow();
 			if(ligne != -1) {
-				String idReservation = this.tableau.getModel().getValueAt(ligne, 0).toString();//Recuperation de l'idReservation
+				String idReservation = this.tableau.getModel().getValueAt(ligne, 0).toString();
 				int idR = Modele.recupInt(idReservation);
-				if(Modele.supprimerReservation(idR)) {//Suppression de la reservation
+				if(Modele.supprimerReservation(idR)) {
+					System.out.println("Suppression réussie");
 					int idUser = this.idVisiteur;
 					ArrayList<Reservation> lesReservations = Modele.getReservation(idUser);
 					V_voirReservation maVue = new V_voirReservation(lesReservations, idUser);
-					JPanel unPanel = maVue.getMonPanel(); // Rafraichissement du tableau
+					JPanel unPanel = maVue.getMonPanel();
 					this.removeAll();
 					this.add(unPanel);
 					this.repaint();
 					this.revalidate();
 					
-				}else {//Si aucune ligne n'a été choisie
-					JOptionPane.showMessageDialog(this, "Suppression echouée");
+				}else {
+					System.out.println("Suppression échouée");
 				}
-			}else {//Si la suppression échoue
-				JOptionPane.showMessageDialog(this, "Aucune ligne n'a été selectionnée");
+			}else {
+				System.out.println("Aucune ligne selectionnée");
 			}
 		}
 	}
