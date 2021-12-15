@@ -21,14 +21,8 @@ public class Modele {
 	 */
 	public static void connexionBDD() {
 		try {
-<<<<<<< HEAD
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connexion = DriverManager.getConnection("jdbc:mysql://localhost:8889/gsb2?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "root", "root");
-=======
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			connexion = DriverManager.getConnection("jdbc:mysql://172.16.203.217/gsb2?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "sio", "slam");
-
->>>>>>> branch 'master' of https://github.com/era91k/GSB2.git
 			st = connexion.createStatement();
 		} 
 		catch (ClassNotFoundException erreur ) {
@@ -248,11 +242,6 @@ public class Modele {
 	}
 	
 	/**
-<<<<<<< HEAD
-	 * Méthode récupérant l'id d'un objet de type Materiel
-=======
-	 * Méthode r�cup�rant l'id d'un Objet de type Materiel
->>>>>>> branch 'master' of https://github.com/era91k/GSB2.git
 	 * @param id
 	 * @return
 	 */
@@ -378,6 +367,7 @@ public class Modele {
 		}
 		return rep;
 	}
+	
 	/**
 	 * Recupere toutes les Reservations d'un visiteur a partir de son id et retourne une collection de Reservations
 	 * @param id
@@ -385,7 +375,7 @@ public class Modele {
 	 */
 	public static ArrayList<Reservation> getReservation(int id){
 		ArrayList<Reservation> lesReservations = new ArrayList<Reservation>();
-		try {//On recupere d'abord les Reservations de v�hicule
+		try {//On recupere d'abord les Reservations de v�hicule
 			String sql = "SELECT Reservation.idReservation, Reservation.idObjet, Reservation.duree, Reservation.dateHeureDebut, Reservation.dateHeureFin, Vehicule.idTypeV, Vehicule.immat, Vehicule.modele, Vehicule.marque, Vehicule.nbPlaces, TypeVehicule.libelle, Objet.nom, Objet.nbReservation FROM Reservation, Vehicule, TypeVehicule, Objet WHERE Reservation.idUtilisateur = ? AND Reservation.idObjet = Vehicule.idVehicule AND Vehicule.idVehicule = Objet.idObjet AND Vehicule.idTypeV = TypeVehicule.idTypeV AND Reservation.idObjet IN (SELECT Vehicule.idVehicule FROM Vehicule) GROUP BY Reservation.idReservation";
 			pst = connexion.prepareStatement(sql);
 			pst.setInt(1, id);
@@ -454,7 +444,7 @@ public class Modele {
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
-			System.out.println("Erreur dans la requ�te supprimerReservation");
+			System.out.println("Erreur dans la requ�te supprimerReservation");
 		}
 		return rep;
 	}
