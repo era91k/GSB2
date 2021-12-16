@@ -9,6 +9,7 @@ public class V_MenuResponsable extends JFrame implements ActionListener {
 	private JMenuBar menu;
 	private JMenu menuMat;
 	private JMenu menuVehicule;
+	private JMenu menuType;
 	private JMenu menuDeconnexion;
 	private JMenuItem voirVehicule;
 	private JMenuItem ajoutVehicule;
@@ -16,6 +17,9 @@ public class V_MenuResponsable extends JFrame implements ActionListener {
 	private JMenuItem voirMat;
 	private JMenuItem ajoutMat;
 	private JMenuItem suppMat;
+	private JMenuItem voirType;
+	private JMenuItem ajoutType;
+	private JMenuItem suppType;
 	private JMenuItem seDeconnect;
 	private JMenuItem quitter;
 	
@@ -66,6 +70,19 @@ public class V_MenuResponsable extends JFrame implements ActionListener {
         this.menuVehicule.add(ajoutVehicule);
         this.menuVehicule.add(suppVehicule);
         this.menu.add(menuVehicule);
+        
+      //Partie Gestion des Véhicules
+        this.menuType = new JMenu("Type de véhicule");
+        this.voirType = new JMenuItem("Voir les types");
+        this.ajoutType = new JMenuItem("Ajouter un type");
+        this.suppType = new JMenuItem("Supprimer un type");
+        this.voirType.addActionListener(new ActionVoirType());
+        this.ajoutType.addActionListener(new ActionAjoutType());
+        this.suppType.addActionListener(new ActionSuppType());
+        this.menuType.add(voirType);
+        this.menuType.add(ajoutType);
+        this.menuType.add(suppType);
+        this.menu.add(menuType);
         
         //Partie deconnexion
         this.menuDeconnexion = new JMenu("Déconnexion");
@@ -160,6 +177,44 @@ public class V_MenuResponsable extends JFrame implements ActionListener {
 			ArrayList<Vehicule> lesVehicules = Modele.getLesVehicules();
 			V_MenuResponsable.this.getContentPane().removeAll();
 			V_MenuResponsable.this.getContentPane().add(new V_SuppVehicule(lesVehicules));
+			V_MenuResponsable.this.revalidate();
+			V_MenuResponsable.this.setVisible(true);
+			
+		}
+	}
+	
+	class ActionVoirType implements ActionListener{
+		public void acttionPerformed(ActionEvent e) {
+			ArrayList<Type_Vehicule> lesTypes = Modele.getLesTypesVehicules();
+			V_MenuResponsable.this.getContentPane().removeAll();
+			V_MenuResponsable.this.getContentPane().add(new V_TypeVehicule(lesTypes));
+			V_MenuResponsable.this.revalidate();
+			V_MenuResponsable.this.setVisible(true);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+	
+	class ActionAjoutType implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			ArrayList<Type_Vehicule> lesTypes = Modele.getLesTypesVehicules();
+			V_MenuResponsable.this.getContentPane().removeAll();
+			V_MenuResponsable.this.getContentPane().add(new V_AjoutType(lesTypes));
+			V_MenuResponsable.this.revalidate();
+			V_MenuResponsable.this.setVisible(true);
+			
+		}
+	}
+	
+	class ActionSuppType implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			ArrayList<Type_Vehicule> lesTypes = Modele.getLesTypesVehicules();
+			V_MenuResponsable.this.getContentPane().removeAll();
+			V_MenuResponsable.this.getContentPane().add(new V_SuppType(lesTypes));
 			V_MenuResponsable.this.revalidate();
 			V_MenuResponsable.this.setVisible(true);
 			

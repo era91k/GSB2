@@ -99,12 +99,18 @@ public class V_AjoutVehicule extends JPanel implements ActionListener{
     					.addComponent(jtfId)
     					.addComponent(lblNom)
     					.addComponent(jtfNom)
+    					.addComponent(lblModele)
+    					.addComponent(jtfModele)
+    					.addComponent(lblPlace)
+    					.addComponent(jtfPlace)
     					)
     			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
     					.addComponent(lblType)
     					.addComponent(jtfType)
     					.addComponent(lblImmat)
     					.addComponent(jtfImmat)
+    					.addComponent(lblMarque)
+    					.addComponent(jtfMarque)
     					)
     			);
         layout.setVerticalGroup(layout.createSequentialGroup()
@@ -116,12 +122,18 @@ public class V_AjoutVehicule extends JPanel implements ActionListener{
         						.addComponent(jtfId)
         						.addComponent(lblNom)
         						.addComponent(jtfNom)
+        						.addComponent(lblModele)
+        						.addComponent(jtfModele)
+        						.addComponent(lblPlace)
+        						.addComponent(jtfPlace)
         						)
         				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
         					.addGroup(layout.createSequentialGroup()
         							.addComponent(jtfType)
         							.addComponent(lblImmat)
-        							.addComponent(jtfImmat))
+        							.addComponent(jtfImmat)
+        							.addComponent(lblMarque)
+        	    					.addComponent(jtfMarque))
         							)
         				)
         		);
@@ -155,8 +167,6 @@ public class V_AjoutVehicule extends JPanel implements ActionListener{
 	            }
 	            V_AjoutVehicule.this.pannelBas.repaint();
 	            V_AjoutVehicule.this.pannelBas.revalidate();
-	            
-
 	    	}
 		}
 		

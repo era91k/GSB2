@@ -143,7 +143,7 @@ public class Modele {
 		try {
 			Modele.connexionBDD();
 			st = connexion.createStatement();
-			String sql = "SELECT * FROM Objet, Vehicule, TypeVehicule WHERE Objet.idObjet = Vehicule.idVehicule GROUP BY idObjet;";
+			String sql = "SELECT * FROM Objet, Vehicule, TypeVehicule WHERE Objet.idObjet = Vehicule.idVehicule AND Vehicule.idTypeV = TypeVehicule.idTypeV GROUP BY idObjet;";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {
 				int id = rs.getInt(1);
@@ -164,6 +164,30 @@ public class Modele {
 			e.printStackTrace();
 		}
 		return lesVehicules;
+	}
+	
+	/**
+	 * Recuper tous les types de véhicules de la bdd et les retourne dans une collection de Type de Vehicule
+	 * @return lesMateriel
+	 */
+	public static ArrayList<Type_Vehicule> getLesTypesVehicules(){
+		ArrayList<Type_Vehicule> lesTypesVehicules = new ArrayList<Type_Vehicule>();
+		try {
+			Modele.connexionBDD();
+			st = connexion.createStatement();
+			String sql = "SELECT * FROM TypeVehicule GROUP BY idTypeV;";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {
+				int code = rs.getInt(1);
+				String libelle = rs.getString(2);
+				Type_Vehicule unType = new Type_Vehicule(code,libelle);
+				lesTypesVehicules.add(unType);
+			}
+		}catch(SQLException e) {
+			System.out.println("Erreur dans la fonction getLesTypesVehicules");
+			e.printStackTrace();
+		}
+		return lesTypesVehicules;
 	}
 	
 	/**
@@ -266,77 +290,6 @@ public class Modele {
 		return rep;
 	}
 	
-	/**
-	 * @param id
-	 * @return
-	 */
-	public static Materiel getMaterielById(int id) {
-		Materiel unMateriel = null;
-		try {
-			Modele.connexionBDD();
-			String sql = "SELECT Objet.idObjet, Objet.nom, Objet.nbReservation, Materiel.largeur, Materiel.longueur, Materiel.typeMat FROM Objet, Materiel WHERE Objet.idObjet = ? AND Objet.idObjet = Materiel.idMat;";
-			pst = connexion.prepareStatement(sql);
-			pst.setInt(1, id);
-			rs = pst.executeQuery();
-			while(rs.next()) {
-				int unId = rs.getInt(1);
-				String nom = rs.getString(2);
-				int nbReserv = rs.getInt(3);
-				double largeur = rs.getDouble(4);
-				double longueur = rs.getDouble(5);
-				String type = rs.getString(6);
-				unMateriel = new Materiel(unId,nom,nbReserv,largeur,longueur,type);
-			}
-		}catch(SQLException e) {
-			System.out.println("Erreur dans la fonction getLesObjets");
-			e.printStackTrace();
-		}
-		return unMateriel;
-	}
-	/**
-	 * Recuperer un Vehicule a partir de son id
-	 * @param id
-	 * @return
-	 */
-	public static Vehicule getVehiculeById(int id) {
-		Vehicule unVehicule = null;
-		try {
-			Modele.connexionBDD();
-			String sql = "SELECT * FROM Objet, Vehicule, TypeVehicule WHERE Objet.idObjet = Vehicule.idVehicule AND Objet.idObjet = ?;";
-			pst = connexion.prepareStatement(sql);
-			pst.setInt(1, id);
-			rs = pst.executeQuery();
-			while(rs.next()) {
-				int unId = rs.getInt(1);
-				String nom = rs.getString(2);
-				int nbReserv = rs.getInt(3);
-				int idTypeV = rs.getInt(5);
-				String immat = rs.getString(6);
-				String modele = rs.getString(7);
-				String marque = rs.getString(8);
-				int nbPlaces = rs.getInt(9);
-				String libelle = rs.getString(11);
-				Type_Vehicule unType = new Type_Vehicule(idTypeV,libelle);
-				unVehicule = new Vehicule(unId,nom,nbReserv,unType,immat,modele,marque,nbPlaces);
-			}
-		}catch(SQLException e) {
-			e.printStackTrace();
-			System.out.println("Erreur dans la fonction getVehiculeById");
-		}
-		return unVehicule;
-	}
-	
-	/**
-	 * Méthode récupérant uniquement l'id d'un Objet
-	 * @param uneChaine
-	 * @return
-	 */
-	public static int recupInt(String uneChaine) {
-		String val = uneChaine.replaceAll("\\D+","");
-		int leInt = Integer.parseInt(val);
-		return leInt;
-	}
-
 	/**Ajouter un Materiel
 	 * @param idObjet
 	 * @param idUser
@@ -420,6 +373,100 @@ public class Modele {
 		return rep;
 	}
 	
+	/**
+	 * Methode de suppression d'un type de vehicule
+	 * @param unCode
+	 * @return
+	 */
+	public static boolean supprimerTypeVehicule(int unCode) {
+		boolean rep = false;
+		int ins ;
+		try {
+			Modele.connexionBDD();
+			String req = "DELETE FROM TypeVehicule WHERE code = ?";
+			ins = st.executeUpdate(req);
+			if(ins == 1) {
+				rep = true;
+			}
+			
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return rep;
+	}
+	
+	/**
+	 * @param id
+	 * @return
+	 */
+	public static Materiel getMaterielById(int id) {
+		Materiel unMateriel = null;
+		try {
+			Modele.connexionBDD();
+			String sql = "SELECT Objet.idObjet, Objet.nom, Objet.nbReservation, Materiel.largeur, Materiel.longueur, Materiel.typeMat FROM Objet, Materiel WHERE Objet.idObjet = ? AND Objet.idObjet = Materiel.idMat;";
+			pst = connexion.prepareStatement(sql);
+			pst.setInt(1, id);
+			rs = pst.executeQuery();
+			while(rs.next()) {
+				int unId = rs.getInt(1);
+				String nom = rs.getString(2);
+				int nbReserv = rs.getInt(3);
+				double largeur = rs.getDouble(4);
+				double longueur = rs.getDouble(5);
+				String type = rs.getString(6);
+				unMateriel = new Materiel(unId,nom,nbReserv,largeur,longueur,type);
+			}
+		}catch(SQLException e) {
+			System.out.println("Erreur dans la fonction getLesObjets");
+			e.printStackTrace();
+		}
+		return unMateriel;
+	}
+	/**
+	 * Recuperer un Vehicule a partir de son id
+	 * @param id
+	 * @return
+	 */
+	public static Vehicule getVehiculeById(int id) {
+		Vehicule unVehicule = null;
+		try {
+			Modele.connexionBDD();
+			String sql = "SELECT * FROM Objet, Vehicule, TypeVehicule WHERE Objet.idObjet = Vehicule.idVehicule AND Objet.idObjet = ?;";
+			pst = connexion.prepareStatement(sql);
+			pst.setInt(1, id);
+			rs = pst.executeQuery();
+			while(rs.next()) {
+				int unId = rs.getInt(1);
+				String nom = rs.getString(2);
+				int nbReserv = rs.getInt(3);
+				int idTypeV = rs.getInt(5);
+				String immat = rs.getString(6);
+				String modele = rs.getString(7);
+				String marque = rs.getString(8);
+				int nbPlaces = rs.getInt(9);
+				String libelle = rs.getString(11);
+				Type_Vehicule unType = new Type_Vehicule(idTypeV,libelle);
+				unVehicule = new Vehicule(unId,nom,nbReserv,unType,immat,modele,marque,nbPlaces);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println("Erreur dans la fonction getVehiculeById");
+		}
+		return unVehicule;
+	}
+	
+	/**
+	 * Méthode récupérant uniquement l'id d'un Objet
+	 * @param uneChaine
+	 * @return
+	 */
+	public static int recupInt(String uneChaine) {
+		String val = uneChaine.replaceAll("\\D+","");
+		int leInt = Integer.parseInt(val);
+		return leInt;
+	}
 	
 	/**
 	 * Recupere toutes les Reservations d'un visiteur a partir de son id et retourne une collection de Reservations

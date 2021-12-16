@@ -22,3 +22,11 @@
 /V_SuppVehicule$ActionValider.class
 /V_MenuResponsable$ActionSuppMat.class
 /V_AjoutVehicule$ActionValider.class
+/V_SuppType.class
+/V_MenuResponsable$ActionAjoutType.class
+/V_MenuResponsable$ActionSuppType.class
+/V_MenuResponsable$ActionVoirType.class
+/V_AjoutType.class
+/V_TypeVehicule.class
+/V_SuppType$ActionValider.class
+/V_AjoutType$ActionValider.class
