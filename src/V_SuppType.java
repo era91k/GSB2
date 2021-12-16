@@ -58,7 +58,6 @@ public class V_SuppType extends JPanel implements ActionListener {
 	    	if(evenement.getSource() == btn) {
 	    		String objet = V_SuppType.this.liste.getSelectedItem().toString();
 				int idObjet = Modele.recupInt(objet);
-	    		String newLine = System.getProperty("line.separator");
 	            if(Modele.supprimerVehicule(idObjet)) {
 	            	V_SuppType.this.lblNotif.setText("Suppression réussie.");
 	            	V_SuppType.this.lblNotif.setForeground(Color.green);

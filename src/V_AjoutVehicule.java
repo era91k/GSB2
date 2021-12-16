@@ -155,7 +155,6 @@ public class V_AjoutVehicule extends JPanel implements ActionListener{
 	    		String modele = jtfModele.getText();
 	    		String marque = jtfMarque.getText();
 	    		int nbPlace = Integer.parseInt(jtfPlace.getText());
-	    		String newLine = System.getProperty("line.separator");
 	            //On v�rifie que l'ajout est bon et si c'est le cas on actualise les panels
 	            if(Modele.ajouterVehicule(id,nom,type,immat,modele,marque,nbPlace)) {
 	            	V_AjoutVehicule.this.lblNotif.setText("Ajout enregistrée.");

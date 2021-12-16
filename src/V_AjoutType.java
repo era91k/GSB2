@@ -95,7 +95,6 @@ public class V_AjoutType extends JPanel implements ActionListener{
 			if(e.getSource() == btnValider) {
 				int id = Integer.parseInt(jtfId.getText());
 	    		String nom = jtfNom.getText();
-	    		String newLine = System.getProperty("line.separator");
 	            //On v�rifie que l'ajout est bon et si c'est le cas on actualise les panels
 	            if(Modele.ajouterTypeVehicule(id,nom)) {
 	            	V_AjoutType.this.lblNotif.setText("Ajout enregistrée.");

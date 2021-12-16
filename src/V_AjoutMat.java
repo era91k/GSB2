@@ -122,7 +122,6 @@ public class V_AjoutMat extends JPanel implements ActionListener{
 	    		double largeur = Integer.parseInt(jtfLargeur.getText());
 	    		double longueur = Integer.parseInt(jtfLongueur.getText());
 	    		String type = jtfType.getText();
-	    		String newLine = System.getProperty("line.separator");
 	            //On v�rifie que l'ajout est bon et si c'est le cas on actualise les panels
 	            if(Modele.ajouterMat(id,nom,largeur,longueur,type)) {
 	            	V_AjoutMat.this.lblNotif.setText("Ajout enregistrée.");

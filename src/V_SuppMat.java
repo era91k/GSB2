@@ -60,7 +60,6 @@ public class V_SuppMat extends JPanel implements ActionListener{
 	    	if(evenement.getSource() == btn) {
 	    		String objet = V_SuppMat.this.liste.getSelectedItem().toString();
 				int idObjet = Modele.recupInt(objet);
-	    		String newLine = System.getProperty("line.separator");
 	            if(Modele.supprimerMat(idObjet)) {
 	            	V_SuppMat.this.lblNotif.setText("Suppression enregistrée.");
 	            	V_SuppMat.this.lblNotif.setForeground(Color.green);
