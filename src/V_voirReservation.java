@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSetMetaData;
 public class V_voirReservation extends JPanel implements ActionListener{
-	//Attributs privés
+	//Attributs privï¿½s
 	private JPanel monPanel;
 	private JLabel lblTitre;
 	private JLabel lblNotif;
@@ -29,7 +29,7 @@ public class V_voirReservation extends JPanel implements ActionListener{
 		this.idVisiteur = idUser;
 		
 		//Labels
-		this.lblTitre = new JLabel("Mes réservations");
+		this.lblTitre = new JLabel("Mes rÃ©servations");
 		this.lblTitre.setForeground(Color.white);
 		this.lblTitre.setFont(new Font("Verdana", Font.PLAIN, 30));
 		this.lblTitre.setBorder(new EmptyBorder(20,0,30,130));
@@ -44,7 +44,7 @@ public class V_voirReservation extends JPanel implements ActionListener{
 		this.btnSupprimer.addActionListener(this);
 		
 		//Tableau
-		String[] entetes = {"Reservation", "Objet reservé", "Duree", "Date début", "Date Fin"};
+		String[] entetes = {"Reservation", "Objet reservÃ©", "Duree", "Date dÃ©but", "Date Fin"};
 		int taille = lesReservations.size();
 		Object[][]donnees = new Object[taille][5];
 		int i = 0;
@@ -89,11 +89,11 @@ public class V_voirReservation extends JPanel implements ActionListener{
 					this.repaint();
 					this.revalidate();
 					
-				}else {//Si aucune ligne n'a été choisie
-					JOptionPane.showMessageDialog(this, "Suppression echouée");
+				}else {//Si aucune ligne n'a ï¿½tï¿½ choisie
+					JOptionPane.showMessageDialog(this, "Suppression echouÃ©e");
 				}
-			}else {//Si la suppression échoue
-				JOptionPane.showMessageDialog(this, "Aucune ligne n'a été selectionnée");
+			}else {//Si la suppression ï¿½choue
+				JOptionPane.showMessageDialog(this, "Aucune ligne n'a Ã©tÃ© selectionnÃ©e");
 			}
 		}
 	}
