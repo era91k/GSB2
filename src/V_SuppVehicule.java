@@ -1,7 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -9,17 +8,16 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
-public class V_SuppMat extends JPanel implements ActionListener{
-
+public class V_SuppVehicule extends JPanel implements ActionListener{
+	
 	private JPanel pannel;
 	private JComboBox<String> liste;
 	private JLabel lblNotif;
 	private JLabel lblMateriel;
 	private JButton btn;
 
-	public V_SuppMat(ArrayList<Materiel> lesMateriels) {
+	public V_SuppVehicule(ArrayList<Vehicule> lesVehicules) {
 		this.setPreferredSize(new Dimension(700,500));
 		this.setLayout(new BorderLayout());
         
@@ -31,14 +29,14 @@ public class V_SuppMat extends JPanel implements ActionListener{
         
         //JComboBox
         this.liste = new JComboBox<String>();
-		ArrayList<Materiel> desMateriels = lesMateriels;
-        for(Materiel unMateriel : desMateriels) {
-        	this.liste.addItem(unMateriel.getIdObjet() + " - " + unMateriel.getNomObjet());
+		ArrayList<Vehicule> desVehicules = lesVehicules;
+        for(Vehicule unVehicule : desVehicules) {
+        	this.liste.addItem(unVehicule.getIdObjet() + " - " + unVehicule.getNomObjet() +  " - " + unVehicule.getMarque());
         }
 		this.liste.setPreferredSize(new Dimension(150,30));
         
         //JLabel
-		this.lblMateriel = new JLabel("Choisir un matériel à supprimer :");
+		this.lblMateriel = new JLabel("Choisir un véhicule à supprimer :");
 		this.lblMateriel.setForeground(Color.white);
 		
 		this.pannel.add(this.lblMateriel);
@@ -58,19 +56,19 @@ public class V_SuppMat extends JPanel implements ActionListener{
 		public void actionPerformed ( ActionEvent evenement) {
 	    	//Si la source de l'�v�nement est le JButton appel� 
 	    	if(evenement.getSource() == btn) {
-	    		String objet = V_SuppMat.this.liste.getSelectedItem().toString();
+	    		String objet = V_SuppVehicule.this.liste.getSelectedItem().toString();
 				int idObjet = Modele.recupInt(objet);
 	    		String newLine = System.getProperty("line.separator");
-	            if(Modele.supprimerMat(idObjet)) {
-	            	V_SuppMat.this.lblNotif.setText("Suppression enregistrée.");
-	            	V_SuppMat.this.lblNotif.setForeground(Color.green);
+	            if(Modele.supprimerVehicule(idObjet)) {
+	            	V_SuppVehicule.this.lblNotif.setText("Suppression réussie.");
+	            	V_SuppVehicule.this.lblNotif.setForeground(Color.green);
 	            }
 	            else {
-	            	V_SuppMat.this.lblNotif.setText("Suppression échouhée, veuillez ré-essayer.");
-	            	V_SuppMat.this.lblNotif.setForeground(Color.red);
+	            	V_SuppVehicule.this.lblNotif.setText("Suppression échouhée, veuillez ré-essayer.");
+	            	V_SuppVehicule.this.lblNotif.setForeground(Color.red);
 	            }
-	            V_SuppMat.this.pannel.repaint();
-	            V_SuppMat.this.pannel.revalidate();
+	            V_SuppVehicule.this.pannel.repaint();
+	            V_SuppVehicule.this.pannel.revalidate();
 	    	}
 	    }
 	}

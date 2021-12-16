@@ -11,3 +11,14 @@
 /V_MenuDirecteur$ActionVoirReservations.class
 /V_MenuDirecteur.class
 /V_SuppMat$ActionValider.class
+/V_AjoutVehicule.class
+/V_SuppVehicule.class
+/V_Materiel.class
+/V_Vehicule.class
+/V_MenuResponsable$ActionAjoutVehicule.class
+/V_MenuResponsable$ActionSuppVehicule.class
+/V_MenuResponsable$ActionVoirMat.class
+/V_MenuResponsable$ActionVoirVehicule.class
+/V_SuppVehicule$ActionValider.class
+/V_MenuResponsable$ActionSuppMat.class
+/V_AjoutVehicule$ActionValider.class

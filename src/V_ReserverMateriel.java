@@ -130,10 +130,10 @@ public class V_ReserverMateriel extends JPanel implements ActionListener {
 			String dateHeureDebut = dateDebut + " " + "08:00:00";
 			String dateHeureFin = dateFin + " " + "18:00:00";
 			if(Modele.ajouterReservation(idObjet, idUser, dateHeureDebut, dateHeureFin)) {
-				V_ReserverMateriel.this.lblNotif.setText("Reservation enregistrée.");
+				V_ReserverMateriel.this.lblNotif.setText("Reservation enregistrÃ©e.");
 				V_ReserverMateriel.this.lblNotif.setForeground(Color.green);
 			}else {
-				V_ReserverMateriel.this.lblNotif.setText("Réservation échouhée, veuillez ré-essayer.");
+				V_ReserverMateriel.this.lblNotif.setText("RÃ©servation Ã©chouhÃ©e, veuillez rÃ©-essayer.");
 				V_ReserverMateriel.this.lblNotif.setForeground(Color.red);
 			}
 			V_ReserverMateriel.this.pannelBas.repaint();

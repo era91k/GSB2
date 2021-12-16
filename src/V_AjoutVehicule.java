@@ -1,10 +1,16 @@
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
-public class V_AjoutMat extends JPanel implements ActionListener{
+public class V_AjoutVehicule extends JPanel implements ActionListener{
 
 	//Attributs priv�s
 	private GroupLayout layout;
@@ -14,16 +20,20 @@ public class V_AjoutMat extends JPanel implements ActionListener{
 	private JTextField jtfId;
 	private JLabel lblNom;
 	private JTextField jtfNom;
-	private JLabel lblLargeur;
-	private JTextField jtfLargeur;
-	private JLabel lblLongueur;
-	private JTextField jtfLongueur;
+	private JLabel lblModele;
+	private JTextField jtfModele;
+	private JLabel lblImmat;
+	private JTextField jtfImmat;
 	private JLabel lblType;
 	private JTextField jtfType;
 	private JButton btnValider;
 	private JLabel lblNotif;
-	
-	public V_AjoutMat(ArrayList<Materiel> lesMat) {
+	private JLabel lblMarque;
+	private JTextField jtfMarque;
+	private JLabel lblPlace;
+	private JTextField jtfPlace;
+		
+	public V_AjoutVehicule(ArrayList<Vehicule> lesVehicules) {
 		this.setPreferredSize(new Dimension(700,500));
 		this.setBackground(new Color(48, 51, 107));
 		this.setLayout(new BorderLayout());
@@ -42,30 +52,40 @@ public class V_AjoutMat extends JPanel implements ActionListener{
         //JLabel
         this.lblNotif = new JLabel("");
         
-  		this.lblId = new JLabel("Id du mat�riel :");
+  		this.lblId = new JLabel("Id du véhicule :");
   		this.lblId.setForeground(Color.white);
   		this.jtfId = new JTextField ("");
 		this.jtfId.setMaximumSize(new Dimension(150,30));
   		
-		this.lblNom = new JLabel("Nom du mat�riel :");
+		this.lblNom = new JLabel("Nom du véhicule :");
 		this.lblNom.setForeground(Color.white);
 		this.jtfNom = new JTextField ("");
 		this.jtfNom.setMaximumSize(new Dimension(100,30));
 		
-		this.lblLargeur = new JLabel("Largeur du mat�riel :");
-		this.lblLargeur.setForeground(Color.white);
-		this.jtfLargeur = new JTextField ("");
-		this.jtfLargeur.setMaximumSize(new Dimension(100,30));
-		
-		this.lblLongueur = new JLabel("Longueur du mat�riel :");
-		this.lblLongueur.setForeground(Color.white);
-		this.jtfLongueur = new JTextField ("");
-		this.jtfLongueur.setMaximumSize(new Dimension(100,30));
-		
-		this.lblType = new JLabel("Type du mat�riel :");
+		this.lblType = new JLabel("Id du type du véhicule :");
 		this.lblType.setForeground(Color.white);
 		this.jtfType = new JTextField ("");
 		this.jtfType.setMaximumSize(new Dimension(100,30));
+		
+		this.lblImmat = new JLabel("Immatriculation du véhicule :");
+		this.lblImmat.setForeground(Color.white);
+		this.jtfImmat = new JTextField ("");
+		this.jtfImmat.setMaximumSize(new Dimension(100,30));
+		
+		this.lblModele = new JLabel("Modele du véhicule :");
+		this.lblModele.setForeground(Color.white);
+		this.jtfModele = new JTextField ("");
+		this.jtfModele.setMaximumSize(new Dimension(100,30));
+		
+		this.lblMarque = new JLabel("Marque du véhicule :");
+		this.lblMarque.setForeground(Color.white);
+		this.jtfMarque = new JTextField ("");
+		this.jtfMarque.setMaximumSize(new Dimension(100,30));
+		
+		this.lblPlace = new JLabel("Nombre de place du véhicule :");
+		this.lblPlace.setForeground(Color.white);
+		this.jtfPlace = new JTextField ("");
+		this.jtfPlace.setMaximumSize(new Dimension(100,30));
 		
 		this.btnValider = new JButton("Valider");
         this.btnValider.setForeground(Color.white);
@@ -81,16 +101,16 @@ public class V_AjoutMat extends JPanel implements ActionListener{
     					.addComponent(jtfNom)
     					)
     			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-    					.addComponent(lblLargeur)
-    					.addComponent(jtfLargeur)
-    					.addComponent(lblLongueur)
-    					.addComponent(jtfLongueur)
+    					.addComponent(lblType)
+    					.addComponent(jtfType)
+    					.addComponent(lblImmat)
+    					.addComponent(jtfImmat)
     					)
     			);
         layout.setVerticalGroup(layout.createSequentialGroup()
         		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
         				.addComponent(lblId)
-        				.addComponent(lblLargeur))
+        				.addComponent(lblType))
         		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
         				.addGroup (layout.createSequentialGroup()
         						.addComponent(jtfId)
@@ -99,9 +119,9 @@ public class V_AjoutMat extends JPanel implements ActionListener{
         						)
         				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
         					.addGroup(layout.createSequentialGroup()
-        							.addComponent(jtfLargeur)
-        							.addComponent(lblLongueur)
-        							.addComponent(jtfLongueur))
+        							.addComponent(jtfType)
+        							.addComponent(lblImmat)
+        							.addComponent(jtfImmat))
         							)
         				)
         		);
@@ -111,7 +131,6 @@ public class V_AjoutMat extends JPanel implements ActionListener{
         this.add(pannelBas, BorderLayout.CENTER);
         this.add(btnValider, BorderLayout.SOUTH);
         this.setVisible(true);
-		
 	}
 	
 	class ActionValider implements ActionListener{
@@ -119,21 +138,23 @@ public class V_AjoutMat extends JPanel implements ActionListener{
 			if(evenement.getSource() == btnValider) {
 				int id = Integer.parseInt(jtfId.getText());
 	    		String nom = jtfNom.getText();	
-	    		double largeur = Integer.parseInt(jtfLargeur.getText());
-	    		double longueur = Integer.parseInt(jtfLongueur.getText());
-	    		String type = jtfType.getText();
+	    		int type = Integer.parseInt(jtfType.getText());
+	    		String immat = jtfImmat.getText();
+	    		String modele = jtfModele.getText();
+	    		String marque = jtfMarque.getText();
+	    		int nbPlace = Integer.parseInt(jtfPlace.getText());
 	    		String newLine = System.getProperty("line.separator");
 	            //On v�rifie que l'ajout est bon et si c'est le cas on actualise les panels
-	            if(Modele.ajouterMat(id,nom,largeur,longueur,type)) {
-	            	V_AjoutMat.this.lblNotif.setText("Ajout enregistrée.");
-	            	V_AjoutMat.this.lblNotif.setForeground(Color.green);
+	            if(Modele.ajouterVehicule(id,nom,type,immat,modele,marque,nbPlace)) {
+	            	V_AjoutVehicule.this.lblNotif.setText("Ajout enregistrée.");
+	            	V_AjoutVehicule.this.lblNotif.setForeground(Color.green);
 	            }
 	            else {
-	            	V_AjoutMat.this.lblNotif.setText("Ajout échouhé, veuillez ré-essayer.");
-		    		V_AjoutMat.this.lblNotif.setForeground(Color.red);
+	            	V_AjoutVehicule.this.lblNotif.setText("Ajout échouhé, veuillez ré-essayer.");
+	            	V_AjoutVehicule.this.lblNotif.setForeground(Color.red);
 	            }
-            	V_AjoutMat.this.pannelBas.repaint();
-            	V_AjoutMat.this.pannelBas.revalidate();
+	            V_AjoutVehicule.this.pannelBas.repaint();
+	            V_AjoutVehicule.this.pannelBas.revalidate();
 	            
 
 	    	}
@@ -142,7 +163,8 @@ public class V_AjoutMat extends JPanel implements ActionListener{
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 

@@ -1,6 +1,6 @@
 public class Vehicule extends Objet{
 
-	//Attributs privés
+	//Attributs privï¿½s
 	private Type_Vehicule typeVehicule;
 	private String immat;
 	private String modele;
@@ -28,12 +28,12 @@ public class Vehicule extends Objet{
 	}
 
 	//Accesseurs
-	public Type_Vehicule getIdTypeV() {
+	public Type_Vehicule getTypeV() {
 		return this.typeVehicule;
 	}
 
-	public void setIdTypeV(Type_Vehicule unIdTypeV) {
-		this.typeVehicule = unIdTypeV;
+	public void setTypeV(Type_Vehicule unTypeV) {
+		this.typeVehicule = unTypeV;
 	}
 
 	public String getImmat() {
@@ -69,7 +69,7 @@ public class Vehicule extends Objet{
 	}
 	
 	/**
-	 * Méthode retournant toutes les informations d'un objet véhicule
+	 * Mï¿½thode retournant toutes les informations d'un objet vï¿½hicule
 	 */
 	public String toString() {
 		int id = super.getIdObjet();

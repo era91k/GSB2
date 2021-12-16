@@ -213,11 +213,11 @@ public class Modele {
 	 * @param unNbPlace
 	 * @return
 	 */
-	public static boolean ajouterVehicule(int unIdObjet, String unNomObjet, int unNbReservation, int unIdTypeV , String unImmat, String unModele, String uneMarque, int unNbPlace) {
+	public static boolean ajouterVehicule(int unIdObjet, String unNomObjet, int unIdTypeV , String unImmat, String unModele, String uneMarque, int unNbPlace) {
 	boolean rep = false;
 		try {
 			Modele.connexionBDD();
-			String requete1 = "INSERT INTO Objet(idObjet,nom) VALUES(?,?);";
+			String requete1 = "INSERT INTO Objet VALUES(?,?,0);";
 			pst = connexion.prepareStatement(requete1);
 			pst.setInt(1, unIdObjet);
 			pst.setString(2, unNomObjet);
@@ -236,6 +236,31 @@ public class Modele {
 			}
 		}
 		catch(SQLException e){
+			e.printStackTrace();
+		}
+		return rep;
+	}
+	
+	/**
+	 * Methode d'ajout d'un type de vehicule
+	 * @param unCode
+	 * @param unLibelle
+	 * @return
+	 */
+	public static boolean ajouterTypeVehicule(int unCode, String unLibelle) {
+		boolean rep = false;
+		try {
+			Modele.connexionBDD();
+			String req = "INSERT INTO TypeVehicule VALUES(?,?);";
+			pst = connexion.prepareStatement(req);
+			pst.setInt(1, unCode);
+			pst.setString(2, unLibelle);
+			int ins = pst.executeUpdate();
+			if(ins == 1) {
+				rep = true;
+			}
+		}
+		catch(SQLException e) {
 			e.printStackTrace();
 		}
 		return rep;
@@ -367,6 +392,34 @@ public class Modele {
 		}
 		return rep;
 	}
+	
+	/**
+	 * Methode de suppression d'Objet de la bdd
+	 * @param unId
+	 * @return
+	 */
+	public static boolean supprimerVehicule (int unId) {
+		Modele.connexionBDD();
+		String requete;
+		String req;
+		int ins;
+		int ins2;
+		boolean rep = false;
+		try {
+			requete = "DELETE FROM Objet WHERE idObjet = ?";
+			ins = st.executeUpdate(requete);
+			req = "DELETE FROM Vehicule WHERE idVehicule = ?";
+			ins2 = st.executeUpdate(req);
+			if (ins == 1 && ins2 == 1) {
+				rep = true;
+			}
+		} 
+		catch (SQLException erreur) {
+			erreur.printStackTrace();
+		}
+		return rep;
+	}
+	
 	
 	/**
 	 * Recupere toutes les Reservations d'un visiteur a partir de son id et retourne une collection de Reservations
