@@ -31,7 +31,7 @@ public class V_TypeVehicule extends JPanel implements ActionListener{
 		this.lblTitre.setBorder(new EmptyBorder(10,0,15,0));
 		
 		//Tableau
-		String[] entetes = {"Id", "Libelle"};
+		String[] entetes = {"Id", "Libelle"}; 
 		int taille = lesTypes.size();
 		Object[][]donnees = new Object[taille][2];
 		int i = 0;
